@@ -1,0 +1,29 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.yuyuanweb.mianshiyaplugin</id>
+    <name>Mianshiya</name>
+    <vendor>co-pine</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.MyBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow canCloseContents="true"
+                    icon="/icons/favicon.svg"
+                    factoryClass="com.github.yuyuanweb.mianshiyaplugin.toolWindow.MyToolWindowFactory" id="面试鸭">
+        </toolWindow>
+        <applicationService serviceImplementation="com.github.yuyuanweb.mianshiyaplugin.config.GlobalState"/>
+
+        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.EditorProvider"/>
+        <fileType name="msyQUESTION" extensions="msy;" fileNames=".msy" language="msyQUESTION"
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonFileType" fieldName="INSTANCE"/>
+        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonProvider"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.yuyuanweb.mianshiyaplugin.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
+
+</idea-plugin>
