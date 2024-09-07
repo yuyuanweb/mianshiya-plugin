@@ -113,7 +113,7 @@ public class BrowserFileEditor implements FileEditor {
 
     @Override
     public @Nullable FileEditorLocation getCurrentLocation() {
-        return FileEditor.super.getCurrentLocation();
+        return null;
     }
 
 }

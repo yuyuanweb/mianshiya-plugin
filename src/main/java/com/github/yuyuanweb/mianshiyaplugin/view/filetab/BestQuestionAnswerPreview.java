@@ -44,7 +44,7 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
 
     @Override
     public @Nullable FileEditorLocation getCurrentLocation() {
-        return FileEditor.super.getCurrentLocation();
+        return null;
     }
 
     private final VirtualFile file;

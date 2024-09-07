@@ -106,7 +106,7 @@ public class CommonPreview extends UserDataHolderBase implements FileEditor {
 
     @Override
     public @Nullable FileEditorLocation getCurrentLocation() {
-        return FileEditor.super.getCurrentLocation();
+        return null;
     }
 
 }

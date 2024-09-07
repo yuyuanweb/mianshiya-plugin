@@ -333,7 +333,7 @@ public class QuestionAnswerPreview extends UserDataHolderBase implements FileEdi
 
     @Override
     public @Nullable FileEditorLocation getCurrentLocation() {
-        return FileEditor.super.getCurrentLocation();
+        return null;
     }
 
 }
