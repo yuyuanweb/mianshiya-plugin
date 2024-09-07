@@ -164,7 +164,7 @@ public class QuestionListManager {
             queryRequest.setCurrent(1);
             try {
                 return mianShiYaApi.listTagCategory(queryRequest).execute().body().getData().stream()
-                        .flatMap(tagGroup -> tagGroup.getTagList().stream().map(tag -> new ComboBoxItem(tag, tag)).toList().stream())
+                        .flatMap(tagGroup -> tagGroup.getTagList().stream().map(tag -> new ComboBoxItem(tag, tag)).collect(Collectors.toList()).stream())
                         .collect(Collectors.toList());
             } catch (IOException e) {
                 throw new RuntimeException(e);
