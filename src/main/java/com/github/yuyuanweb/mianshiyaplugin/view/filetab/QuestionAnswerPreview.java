@@ -330,4 +330,10 @@ public class QuestionAnswerPreview extends UserDataHolderBase implements FileEdi
             return columnNames[column];
         }
     }
+    
+    @Override
+    public @Nullable FileEditorLocation getCurrentLocation() {
+        return FileEditor.super.getCurrentLocation();
+    }
+
 }

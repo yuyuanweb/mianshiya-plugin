@@ -41,10 +41,15 @@ import static com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig.mianShiYaApi
 public class BestQuestionAnswerPreview extends UserDataHolderBase implements FileEditor {
 
     private final Project project;
+
+    @Override
+    public @Nullable FileEditorLocation getCurrentLocation() {
+        return FileEditor.super.getCurrentLocation();
+    }
+
     private final VirtualFile file;
     private JBScrollPane jbScrollPane;
     private BorderLayoutPanel myComponent;
-    private Question question;
     private FileEditor fileEditor;
 
     private boolean isLoad = false;

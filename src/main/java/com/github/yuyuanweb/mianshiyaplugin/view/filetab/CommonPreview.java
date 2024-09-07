@@ -4,6 +4,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolderBase;
@@ -101,6 +102,11 @@ public class CommonPreview extends UserDataHolderBase implements FileEditor {
     @Override
     public @Nullable VirtualFile getFile() {
         return myFile;
+    }
+
+    @Override
+    public @Nullable FileEditorLocation getCurrentLocation() {
+        return FileEditor.super.getCurrentLocation();
     }
 
 }

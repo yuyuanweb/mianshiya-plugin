@@ -5,6 +5,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
 import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
@@ -108,6 +109,11 @@ public class BrowserFileEditor implements FileEditor {
     @Override
     public <T> void putUserData(@NotNull Key<T> key, @Nullable T value) {
 
+    }
+
+    @Override
+    public @Nullable FileEditorLocation getCurrentLocation() {
+        return FileEditor.super.getCurrentLocation();
     }
 
 }
