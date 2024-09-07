@@ -44,7 +44,8 @@ public class BrowserFileEditor implements FileEditor {
                 String cookie = GlobalState.getInstance().getSavedCookie();
                 // todo JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), ".mianshiya.com", "/api", true, true);
                 JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), "localhost", "/api", true, true);
-                cookieManager.setCookie(CommonConstant.WEB_HOST, jbCefCookie);
+                // cookieManager.setCookie(CommonConstant.WEB_HOST, jbCefCookie);
+                cookieManager.setCookie(CommonConstant.WEB_HOST, jbCefCookie, false);
                 jbCefBrowser.setJBCefCookieManager(cookieManager);
             }
         }, jbCefBrowser.getCefBrowser());

@@ -116,7 +116,6 @@ public class LoginPanel extends DialogWrapper {
         @Override
         public void dispose() {
             getJBCefClient().removeLoadHandler(cefLoadHandler, getCefBrowser());
-            getJBCefBrowser(getCefBrowser()).getJBCefCookieManager().deleteCookies("mianshiya.com", null);
             super.dispose();
         }
     }
