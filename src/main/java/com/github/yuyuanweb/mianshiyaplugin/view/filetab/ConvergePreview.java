@@ -16,6 +16,8 @@ import com.intellij.ui.tabs.TabInfo;
 import com.intellij.ui.tabs.TabsListener;
 import com.intellij.ui.tabs.impl.JBEditorTabs;
 import com.intellij.util.ui.JBUI;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -169,7 +171,11 @@ public class ConvergePreview extends UserDataHolderBase implements TextEditor {
 
     }
 
-    public record TabFileEditorState(boolean load) implements FileEditorState {
+    @Data
+    @AllArgsConstructor
+    public static class TabFileEditorState implements FileEditorState {
+
+        private boolean load;
 
         @Override
         public boolean canBeMergedWith(@NotNull FileEditorState otherState, @NotNull FileEditorStateLevel level) {
@@ -177,7 +183,6 @@ public class ConvergePreview extends UserDataHolderBase implements TextEditor {
         }
 
         public static TabFileEditorState TabFileEditorLoadState = new TabFileEditorState(true);
-
 
     }
 

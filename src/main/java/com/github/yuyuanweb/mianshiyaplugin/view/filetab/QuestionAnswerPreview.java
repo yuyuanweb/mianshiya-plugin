@@ -236,7 +236,7 @@ public class QuestionAnswerPreview extends UserDataHolderBase implements FileEdi
     @Override
     public void setState(@NotNull FileEditorState state) {
         if (state instanceof ConvergePreview.TabFileEditorState) {
-            if (!isLoad && ((ConvergePreview.TabFileEditorState) state).load()) {
+            if (!isLoad && ((ConvergePreview.TabFileEditorState) state).isLoad()) {
                 initComponent(null);
             }
         } else if (state instanceof ConvergePreview.TabSelectFileEditorState) {
@@ -330,7 +330,7 @@ public class QuestionAnswerPreview extends UserDataHolderBase implements FileEdi
             return columnNames[column];
         }
     }
-    
+
     @Override
     public @Nullable FileEditorLocation getCurrentLocation() {
         return FileEditor.super.getCurrentLocation();

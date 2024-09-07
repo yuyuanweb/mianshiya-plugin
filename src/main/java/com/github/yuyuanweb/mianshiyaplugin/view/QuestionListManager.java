@@ -22,6 +22,7 @@ import com.intellij.ui.SearchTextField;
 import com.intellij.ui.components.*;
 import com.intellij.ui.table.JBTable;
 import com.intellij.openapi.project.Project;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.ActionEvent;
@@ -270,7 +271,11 @@ public class QuestionListManager {
     }
 
     // 自定义类，用于存储 key-value
-    record ComboBoxItem(String key, String value) {
+    @AllArgsConstructor
+    public static class ComboBoxItem {
+        private String key;
+        private String value;
+
         @Override
         public String toString() {
             // 显示在 JComboBox 中的内容
@@ -283,6 +288,11 @@ public class QuestionListManager {
                 return key.equals(item.key);
             }
             return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return key.hashCode();
         }
     }
 

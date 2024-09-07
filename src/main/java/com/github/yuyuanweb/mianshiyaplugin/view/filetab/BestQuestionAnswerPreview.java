@@ -151,7 +151,7 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
     @Override
     public void setState(@NotNull FileEditorState state) {
         if (state instanceof ConvergePreview.TabFileEditorState) {
-            if (!isLoad && ((ConvergePreview.TabFileEditorState) state).load()) {
+            if (!isLoad && ((ConvergePreview.TabFileEditorState) state).isLoad()) {
                 initComponent();
             }
         } else if (state instanceof ConvergePreview.TabSelectFileEditorState) {
