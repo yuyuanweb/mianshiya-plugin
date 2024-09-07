@@ -7,6 +7,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -40,7 +41,9 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         mainPanel.setBorder(JBUI.Borders.empty());
 
         // 获取 ContentFactory
-        ContentFactory contentFactory = ContentFactory.getInstance();
+        // ContentFactory contentFactory = ContentFactory.getInstance();
+        // 使用旧写法，兼容旧版本
+        ContentFactory contentFactory = ApplicationManager.getApplication().getService(ContentFactory.class);
         Content content = contentFactory.createContent(mainPanel, "首页", true);
         content.setCloseable(false);
 

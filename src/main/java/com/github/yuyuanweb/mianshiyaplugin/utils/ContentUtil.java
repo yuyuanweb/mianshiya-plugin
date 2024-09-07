@@ -4,6 +4,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.components.JBPanel;
@@ -35,7 +36,8 @@ public class ContentUtil {
         mainPanel.add(actionToolbar.getComponent(), BorderLayout.NORTH);
         mainPanel.add(component, BorderLayout.CENTER);
 
-        ContentFactory contentFactory = ContentFactory.getInstance();
+        // ContentFactory contentFactory = ContentFactory.getInstance();
+        ContentFactory contentFactory = ApplicationManager.getApplication().getService(ContentFactory.class);
         Content content = contentFactory.createContent(mainPanel, title, isLockable);
         ContentManager contentManager = ToolWindowManager.getInstance(project).getToolWindow(KeyConstant.PLUGIN_NAME).getContentManager();
         contentManager.addContent(content);
