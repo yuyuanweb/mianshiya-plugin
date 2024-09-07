@@ -12,7 +12,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.jcef.JBCefBrowser;
 import com.intellij.ui.jcef.JBCefCookie;
 import com.intellij.ui.jcef.JBCefCookieManager;
-import org.cef.CefApp;
+import org.cef.browser.CefBrowser;
+import org.cef.handler.CefLoadHandlerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,31 +26,33 @@ import java.beans.PropertyChangeListener;
  */
 public class BrowserFileEditor implements FileEditor {
 
-    private final JBCefBrowser browser;
+    private final JBCefBrowser jbCefBrowser;
     private final JPanel panel;
 
     public BrowserFileEditor(@NotNull Project project, @NotNull VirtualFile file) {
-        this.browser = new JBCefBrowser();
+        this.jbCefBrowser = new JBCefBrowser();
         this.panel = new JPanel(new BorderLayout());
-        this.panel.add(browser.getComponent(), BorderLayout.CENTER);
+        this.panel.add(jbCefBrowser.getComponent(), BorderLayout.CENTER);
         this.panel.setPreferredSize(new Dimension());
 
         // 加载文件内容到浏览器
-        CefApp.getInstance().onInitialization(a -> {
-            JBCefCookieManager cookieManager = browser.getJBCefCookieManager();
-            String cookie = GlobalState.getInstance().getSavedCookie();
-            // todo JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), ".mianshiya.com", "/api", true, true);
-            JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), "localhost", "/api", true, true);
-            cookieManager.setCookie(CommonConstant.WEB_HOST, jbCefCookie);
-            browser.setJBCefCookieManager(cookieManager);
-
-            Long questionId = file.get().get(KeyConstant.QUESTION_ID_KEY);
-            WebTypeEnum webTypeEnum = file.get().get(KeyConstant.WEB_TYPE_KEY);
-            if (questionId != null && webTypeEnum != null) {
-                String url = String.format(CommonConstant.PLUGIN_QD, questionId, webTypeEnum.getValue());
-                browser.loadURL(url);
+        jbCefBrowser.getJBCefClient().addLoadHandler(new CefLoadHandlerAdapter() {
+            @Override
+            public void onLoadingStateChange(CefBrowser browser, boolean isLoading, boolean canGoBack, boolean canGoForward) {
+                JBCefCookieManager cookieManager = jbCefBrowser.getJBCefCookieManager();
+                String cookie = GlobalState.getInstance().getSavedCookie();
+                // todo JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), ".mianshiya.com", "/api", true, true);
+                JBCefCookie jbCefCookie = new JBCefCookie("SESSION", cookie.replace("SESSION=", ""), "localhost", "/api", true, true);
+                cookieManager.setCookie(CommonConstant.WEB_HOST, jbCefCookie);
+                jbCefBrowser.setJBCefCookieManager(cookieManager);
             }
-        });
+        }, jbCefBrowser.getCefBrowser());
+        Long questionId = file.get().get(KeyConstant.QUESTION_ID_KEY);
+        WebTypeEnum webTypeEnum = file.get().get(KeyConstant.WEB_TYPE_KEY);
+        if (questionId != null && webTypeEnum != null) {
+            String url = String.format(CommonConstant.PLUGIN_QD, questionId, webTypeEnum.getValue());
+            jbCefBrowser.loadURL(url);
+        }
     }
 
     @Override
@@ -59,7 +62,7 @@ public class BrowserFileEditor implements FileEditor {
 
     @Override
     public @Nullable JComponent getPreferredFocusedComponent() {
-        return browser.getComponent();
+        return jbCefBrowser.getComponent();
     }
 
     @Override
@@ -94,7 +97,7 @@ public class BrowserFileEditor implements FileEditor {
 
     @Override
     public void dispose() {
-        browser.dispose();
+        jbCefBrowser.dispose();
     }
 
     @Override
