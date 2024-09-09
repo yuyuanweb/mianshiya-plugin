@@ -4,6 +4,14 @@
     <name>Mianshiya</name>
     <vendor>co-pine</vendor>
 
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+        <h2>Plugin Introduction</h2>
+        <p>This is a plug-in version of <a href="https://www.mianshiya.com">mianshiya</a> system, which provides a more convenient and flexible way to practice questions.</p>
+]]></description>
+
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
