@@ -33,21 +33,6 @@ import java.util.stream.Collectors;
  */
 public class PanelUtil {
 
-    public static final JBPanel<?> NEED_VIP_PANEL;
-
-    // 初始化一些不变的资源
-    static {
-        NEED_VIP_PANEL = new JBPanel<>();
-        AbstractAction needVipAction = new AbstractAction("仅会员可见内容，请先开通会员", AllIcons.General.User) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                BrowserUtil.browse(CommonConstant.VIP);
-            }
-        };
-        NEED_VIP_PANEL.add(new JBOptionButton(needVipAction, null));
-    }
-
-
     public static JPanel createClosePanel(String title, JPanel tabPanel, JBTabbedPane tabbedPane) {
         JPanel tabLabel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         tabLabel.setOpaque(false);
@@ -187,7 +172,15 @@ public class PanelUtil {
     }
 
     public static JBPanel<?> getNeedVipPanel() {
-        return NEED_VIP_PANEL;
+        JBPanel<?> needVipPanel = new JBPanel<>();
+        AbstractAction needVipAction = new AbstractAction("仅会员可见内容，请先开通会员", AllIcons.General.User) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BrowserUtil.browse(CommonConstant.VIP);
+            }
+        };
+        needVipPanel.add(new JBOptionButton(needVipAction, null));
+        return needVipPanel;
     }
 
 }
