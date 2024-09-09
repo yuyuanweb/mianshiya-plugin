@@ -12,9 +12,11 @@ import com.github.yuyuanweb.mianshiyaplugin.temp.BrowserFileEditorProvider;
 import com.github.yuyuanweb.mianshiyaplugin.utils.FileUtils;
 import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
 import com.github.yuyuanweb.mianshiyaplugin.utils.UserUtil;
+import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -97,19 +99,21 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
 
     private void openArticle(Long questionId) {
         User loginUser = GlobalState.getInstance().getSavedUser();
+        if (loginUser == null) {
+            LoginPanel loginPanel = new LoginPanel(ProjectManager.getInstance().getDefaultProject());
+            loginPanel.showAndGet();
+        }
+        loginUser = GlobalState.getInstance().getSavedUser();
         boolean needTipPanel = !UserUtil.hasVipAuth(loginUser);
         if (needTipPanel) {
             JBPanel<?> tipPanel = new JBPanel<>();
             if (loginUser != null) {
                 JBPanel<?> needVipPanel = PanelUtil.getNeedVipPanel();
                 tipPanel.add(needVipPanel);
-            } else {
-                tipPanel.add(new JBLabel(TextConstant.LOGIN));
+                myComponent.removeAll();
+                myComponent.addToTop(tipPanel);
+                myComponent.repaint();
             }
-            myComponent.removeAll();
-            myComponent.addToTop(tipPanel);
-            myComponent.repaint();
-            return;
         }
 
         File file = null;

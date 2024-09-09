@@ -3,9 +3,12 @@ package com.github.yuyuanweb.mianshiyaplugin.utils;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
+import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
+import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.github.yuyuanweb.mianshiyaplugin.view.MTabModel;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.BrowserUtil;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
@@ -181,6 +184,19 @@ public class PanelUtil {
         };
         needVipPanel.add(new JBOptionButton(needVipAction, null));
         return needVipPanel;
+    }
+
+    public static JBPanel<?> getNeedLoginPanel() {
+        JBPanel<?> needLoginPanel = new JBPanel<>();
+        AbstractAction needVipAction = new AbstractAction(TextConstant.LOGIN, AllIcons.General.User) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginPanel loginPanel = new LoginPanel(ProjectManager.getInstance().getDefaultProject());
+                loginPanel.show();
+            }
+        };
+        needLoginPanel.add(new JBOptionButton(needVipAction, null));
+        return needLoginPanel;
     }
 
 }
