@@ -187,58 +187,60 @@ public class QuestionListManager {
     // 创建带有自定义渲染器和点击处理的筛选框
     private JComboBox<ComboBoxItem> createCustomFilterBox(Supplier<List<ComboBoxItem>> supplier, int lastSelectedIndex, String fieldName, String placeHolder) {
         ComboBox<ComboBoxItem> comboBox = new ComboBox<>();
-        ApplicationManager.getApplication().invokeLater(() -> {
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
             List<ComboBoxItem> comboBoxItems = supplier.get();
-            comboBox.setModel(new DefaultComboBoxModel<>(ArrayUtil.toArray(comboBoxItems, ComboBoxItem.class)));
-            Long questionBankId = questionQueryRequest.getQuestionBankId();
-            if (QUESTION_BANK_ID_FILE_NAME.equals(fieldName) && comboBoxLastSelectedItem[questionBankLastSelectedIndex] == initSelectedIndex && questionBankId != null) {
-                int index = comboBoxItems.indexOf(new ComboBoxItem(questionBankId.toString(), null));
-                comboBox.setSelectedIndex(index);
-                comboBox.repaint();
-                comboBoxLastSelectedItem[lastSelectedIndex] = index;
-            } else {
-                comboBox.setSelectedIndex(nullIndex);
-                comboBoxLastSelectedItem[lastSelectedIndex] = nullIndex;
-            }
-            comboBox.setRenderer(new CheckmarkRenderer(comboBox, placeHolder));
-            comboBox.addActionListener(new ActionListener() {
-                // 防止递归调用
-                private boolean ignoreAction = false;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (ignoreAction) {
-                        return;
-                    }
-                    ignoreAction = true;
-
-                    int selectedIndex = comboBox.getSelectedIndex();
-                    // 获取下拉列表选中的值
-                    ComboBoxItem selectedItem = (ComboBoxItem) comboBox.getSelectedItem();
-                    if (comboBoxLastSelectedItem[lastSelectedIndex] == comboBox.getSelectedIndex()) {
-                        ReflectUtil.setFieldValue(questionQueryRequest, fieldName, null);
-                    } else {
-                        assert selectedItem != null;
-                        String selectedItemKey = selectedItem.key;
-                        if (TAG_LIST_FILE_NAME.equals(fieldName)) {
-                            ReflectUtil.setFieldValue(questionQueryRequest, fieldName, Arrays.asList(selectedItemKey.getClass().cast(selectedItemKey)));
-                        } else {
-                            ReflectUtil.setFieldValue(questionQueryRequest, fieldName, selectedItemKey.getClass().cast(selectedItemKey));
-                        }
-                    }
-
-                    if (comboBox.getSelectedItem() != null) {
-                        if (comboBoxLastSelectedItem[lastSelectedIndex] == selectedIndex) {
-                            // 如果已经有对号，再次点击时取消选中并恢复为默认状态
-                            comboBox.setSelectedIndex(nullIndex);
-                            selectedIndex = nullIndex;
-                        }
-                    }
-                    comboBoxLastSelectedItem[lastSelectedIndex] = selectedIndex;
-                    ignoreAction = false;
-
-                    QuestionListManager.this.searchAndLoadData(questionQueryRequest);
+            ApplicationManager.getApplication().invokeLater(() -> {
+                comboBox.setModel(new DefaultComboBoxModel<>(ArrayUtil.toArray(comboBoxItems, ComboBoxItem.class)));
+                Long questionBankId = questionQueryRequest.getQuestionBankId();
+                if (QUESTION_BANK_ID_FILE_NAME.equals(fieldName) && comboBoxLastSelectedItem[questionBankLastSelectedIndex] == initSelectedIndex && questionBankId != null) {
+                    int index = comboBoxItems.indexOf(new ComboBoxItem(questionBankId.toString(), null));
+                    comboBox.setSelectedIndex(index);
+                    comboBox.repaint();
+                    comboBoxLastSelectedItem[lastSelectedIndex] = index;
+                } else {
+                    comboBox.setSelectedIndex(nullIndex);
+                    comboBoxLastSelectedItem[lastSelectedIndex] = nullIndex;
                 }
+                comboBox.setRenderer(new CheckmarkRenderer(comboBox, placeHolder));
+                comboBox.addActionListener(new ActionListener() {
+                    // 防止递归调用
+                    private boolean ignoreAction = false;
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (ignoreAction) {
+                            return;
+                        }
+                        ignoreAction = true;
+
+                        int selectedIndex = comboBox.getSelectedIndex();
+                        // 获取下拉列表选中的值
+                        ComboBoxItem selectedItem = (ComboBoxItem) comboBox.getSelectedItem();
+                        if (comboBoxLastSelectedItem[lastSelectedIndex] == comboBox.getSelectedIndex()) {
+                            ReflectUtil.setFieldValue(questionQueryRequest, fieldName, null);
+                        } else {
+                            assert selectedItem != null;
+                            String selectedItemKey = selectedItem.key;
+                            if (TAG_LIST_FILE_NAME.equals(fieldName)) {
+                                ReflectUtil.setFieldValue(questionQueryRequest, fieldName, Arrays.asList(selectedItemKey.getClass().cast(selectedItemKey)));
+                            } else {
+                                ReflectUtil.setFieldValue(questionQueryRequest, fieldName, selectedItemKey.getClass().cast(selectedItemKey));
+                            }
+                        }
+
+                        if (comboBox.getSelectedItem() != null) {
+                            if (comboBoxLastSelectedItem[lastSelectedIndex] == selectedIndex) {
+                                // 如果已经有对号，再次点击时取消选中并恢复为默认状态
+                                comboBox.setSelectedIndex(nullIndex);
+                                selectedIndex = nullIndex;
+                            }
+                        }
+                        comboBoxLastSelectedItem[lastSelectedIndex] = selectedIndex;
+                        ignoreAction = false;
+
+                        QuestionListManager.this.searchAndLoadData(questionQueryRequest);
+                    }
+                });
             });
         });
         return comboBox;
@@ -301,49 +303,51 @@ public class QuestionListManager {
      * 数据表格
      */
     private void getDataPanel(Project project, JBPanel<?> newTabPanel) {
-        ApplicationManager.getApplication().invokeLater(() -> {
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
             BaseResponse<Page<Question>> data = this.fetchQuestionList(questionQueryRequest);
-            // 创建表格数据模型
-            tableModel = new MTabModel();
-            tableModel.addColumn("id");
-            tableModel.addColumn("标题");
-            tableModel.addColumn("难度");
-            tableModel.addColumn("标签");
-            tableModel.addColumn("number");
+            ApplicationManager.getApplication().invokeLater(() -> {
+                // 创建表格数据模型
+                tableModel = new MTabModel();
+                tableModel.addColumn("id");
+                tableModel.addColumn("标题");
+                tableModel.addColumn("难度");
+                tableModel.addColumn("标签");
+                tableModel.addColumn("number");
 
-            // 将数据添加到表格模型
-            for (Question row : data.getData().getRecords()) {
-                DifficultyEnum difficultyEnum = DifficultyEnum.getEnumByValue(row.getDifficulty());
-                String difficulty = null;
-                if (difficultyEnum != null) {
-                    difficulty = difficultyEnum.getText();
+                // 将数据添加到表格模型
+                for (Question row : data.getData().getRecords()) {
+                    DifficultyEnum difficultyEnum = DifficultyEnum.getEnumByValue(row.getDifficulty());
+                    String difficulty = null;
+                    if (difficultyEnum != null) {
+                        difficulty = difficultyEnum.getText();
+                    }
+                    tableModel.addRow(new Object[]{row.getId().toString(), row.getTitle(), difficulty, row.getTagList(), row.getQuestionNum()});
                 }
-                tableModel.addRow(new Object[]{row.getId().toString(), row.getTitle(), difficulty, row.getTagList(), row.getQuestionNum()});
-            }
 
-            // 创建表格
-            JBTable table = PanelUtil.createTablePanel(tableModel, (tempTable, mouseEvent) -> {
-                Long questionId = Long.valueOf((String) tempTable.getValueAt(tempTable.getSelectedRow(), 0));
-                String questionTitle = (String) tempTable.getValueAt(tempTable.getSelectedRow(), 1);
-                Long questionNum = (Long) tempTable.getValueAt(tempTable.getSelectedRow(), 4);
-                FileUtils.openNewEditorTab(project, questionId, questionNum, questionTitle);
-            }, 3);
+                // 创建表格
+                JBTable table = PanelUtil.createTablePanel(tableModel, (tempTable, mouseEvent) -> {
+                    Long questionId = Long.valueOf((String) tempTable.getValueAt(tempTable.getSelectedRow(), 0));
+                    String questionTitle = (String) tempTable.getValueAt(tempTable.getSelectedRow(), 1);
+                    Long questionNum = (Long) tempTable.getValueAt(tempTable.getSelectedRow(), 4);
+                    FileUtils.openNewEditorTab(project, questionId, questionNum, questionTitle);
+                }, 3);
 
-            // 设置列宽为0，使列存在但不可见
-            TableColumn column = table.getColumnModel().getColumn(4);
-            column.setMinWidth(0);
-            column.setMaxWidth(0);
-            column.setPreferredWidth(0);
-            table.setFillsViewportHeight(true);
+                // 设置列宽为0，使列存在但不可见
+                TableColumn column = table.getColumnModel().getColumn(4);
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+                column.setPreferredWidth(0);
+                table.setFillsViewportHeight(true);
 
-            // 将表格添加到滚动面板
-            JBScrollPane scrollPane = new JBScrollPane(table);
-            // 确保表格充满视口
-            scrollPane.setViewportView(table);
-            newTabPanel.add(scrollPane, BorderLayout.CENTER);
+                // 将表格添加到滚动面板
+                JBScrollPane scrollPane = new JBScrollPane(table);
+                // 确保表格充满视口
+                scrollPane.setViewportView(table);
+                newTabPanel.add(scrollPane, BorderLayout.CENTER);
 
-            // 更新分页条
-            PanelUtil.updatePaginationPanel(paginationPanel, data.getData().getTotal(), currentPage, this::loadPage);
+                // 更新分页条
+                PanelUtil.updatePaginationPanel(paginationPanel, data.getData().getTotal(), currentPage, this::loadPage);
+            });
         });
     }
 
@@ -372,24 +376,26 @@ public class QuestionListManager {
         if (tableModel == null) {
             return;
         }
-        ApplicationManager.getApplication().invokeLater(() -> {
-            tableModel.setRowCount(0);
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
             BaseResponse<Page<Question>> response = this.fetchQuestionList(queryRequest);
-            Page<Question> data = response.getData();
+            ApplicationManager.getApplication().invokeLater(() -> {
+                tableModel.setRowCount(0);
+                Page<Question> data = response.getData();
 
-            // 添加新数据到表格模型
-            for (Question row : data.getRecords()) {
-                DifficultyEnum difficultyEnum = DifficultyEnum.getEnumByValue(row.getDifficulty());
-                String difficulty = null;
-                if (difficultyEnum != null) {
-                    difficulty = difficultyEnum.getText();
+                // 添加新数据到表格模型
+                for (Question row : data.getRecords()) {
+                    DifficultyEnum difficultyEnum = DifficultyEnum.getEnumByValue(row.getDifficulty());
+                    String difficulty = null;
+                    if (difficultyEnum != null) {
+                        difficulty = difficultyEnum.getText();
+                    }
+                    tableModel.addRow(new Object[]{row.getId().toString(), row.getTitle(), difficulty, row.getTagList(), row.getQuestionNum()});
                 }
-                tableModel.addRow(new Object[]{row.getId().toString(), row.getTitle(), difficulty, row.getTagList(), row.getQuestionNum()});
-            }
 
-            // 重新渲染表格
-            tableModel.fireTableDataChanged();
-            PanelUtil.updatePaginationPanel(paginationPanel, data.getTotal(), currentPage, this::loadPage);
+                // 重新渲染表格
+                tableModel.fireTableDataChanged();
+                PanelUtil.updatePaginationPanel(paginationPanel, data.getTotal(), currentPage, this::loadPage);
+            });
         });
     }
 

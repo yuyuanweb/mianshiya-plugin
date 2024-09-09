@@ -42,6 +42,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig.mianShiYaApi;
@@ -91,73 +92,78 @@ public class QuestionAnswerPreview extends UserDataHolderBase implements FileEdi
 
     private void initComponent(String defaultSlug) {
         isLoad = true;
-        ApplicationManager.getApplication().invokeLater(() -> {
-            JBLabel loadingLabel = new JBLabel("Loading......");
-            mySplitter.setFirstComponent(loadingLabel);
-            try {
-                KeyFMap keyFMap = file.get();
-                Long questionId = keyFMap.get(KeyConstant.QUESTION_ID_KEY);
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
+            KeyFMap keyFMap = file.get();
+            Long questionId = keyFMap.get(KeyConstant.QUESTION_ID_KEY);
 
-                QuestionAnswerQueryRequest questionAnswerQueryRequest = new QuestionAnswerQueryRequest();
-                questionAnswerQueryRequest.setPageSize(10);
-                questionAnswerQueryRequest.setQuestionId(questionId);
+            QuestionAnswerQueryRequest questionAnswerQueryRequest = new QuestionAnswerQueryRequest();
+            questionAnswerQueryRequest.setPageSize(10);
+            questionAnswerQueryRequest.setQuestionId(questionId);
+            BaseResponse<Page<QuestionAnswer>> baseResponse = null;
+            try {
+                baseResponse = mianShiYaApi.listQuestionAnswerByQuestionId(questionAnswerQueryRequest).execute().body();
+            } catch (IOException ignored) {
+            }
+
+            BaseResponse<Page<QuestionAnswer>> finalBaseResponse = baseResponse;
+            ApplicationManager.getApplication().invokeLater(() -> {
+                JBLabel loadingLabel = new JBLabel("Loading......");
+                mySplitter.setFirstComponent(loadingLabel);
                 try {
-                    BaseResponse<Page<QuestionAnswer>> baseResponse = mianShiYaApi.listQuestionAnswerByQuestionId(questionAnswerQueryRequest).execute().body();
-                    if (baseResponse.getCode() == ErrorCode.NO_VIP_AUTH_ERROR.getCode()) {
+                    if (finalBaseResponse.getCode() == ErrorCode.NO_VIP_AUTH_ERROR.getCode()) {
                         JBPanel<?> needVipPanel = PanelUtil.getNeedVipPanel();
                         myComponent.addToTop(needVipPanel);
                         return;
                     }
-                    questionAnswerList = baseResponse.getData().getRecords();
-                } catch (Exception ignored) {
-                }
-                if (CollectionUtils.isEmpty(questionAnswerList)) {
-                    myComponent.addToTop(new JBLabel(TextConstant.NO_SOLUTION));
-                } else {
-                    table = new JBTable(new TableModel(questionAnswerList));
-                    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                    table.getTableHeader().setReorderingAllowed(false);
-                    table.setRowSelectionAllowed(true);
+                    questionAnswerList = finalBaseResponse.getData().getRecords();
+                    if (CollectionUtils.isEmpty(questionAnswerList)) {
+                        myComponent.addToTop(new JBLabel(TextConstant.NO_SOLUTION));
+                    } else {
+                        table = new JBTable(new TableModel(questionAnswerList));
+                        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                        table.getTableHeader().setReorderingAllowed(false);
+                        table.setRowSelectionAllowed(true);
 
-                    table.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-                                int row = table.getSelectedRow();
-                                openSelectedQuestion(questionAnswerList, row);
+                        table.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+                                    int row = table.getSelectedRow();
+                                    openSelectedQuestion(questionAnswerList, row);
+                                }
                             }
-                        }
-                    });
-                    table.addKeyListener(new KeyAdapter() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                            if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-                                int row = table.getSelectedRow();
-                                openSelectedQuestion(questionAnswerList, row);
+                        });
+                        table.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyTyped(KeyEvent e) {
+                                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                                    int row = table.getSelectedRow();
+                                    openSelectedQuestion(questionAnswerList, row);
+                                }
                             }
-                        }
-                    });
-                    JBScrollPane jbScrollPane = new JBScrollPane(table, JBScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JBScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    // 确保表格充满视口
-                    mySplitter.setFirstComponent(jbScrollPane);
+                        });
+                        JBScrollPane jbScrollPane = new JBScrollPane(table, JBScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JBScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                        // 确保表格充满视口
+                        mySplitter.setFirstComponent(jbScrollPane);
 
-                    if (StringUtils.isNotBlank(defaultSlug)) {
-                        for (int i = 0; i < questionAnswerList.size(); i++) {
-                            if (questionAnswerList.get(i).getContent().equals(defaultSlug)) {
-                                openSelectedQuestion(questionAnswerList, i);
-                                table.setRowSelectionInterval(i, i);
-                                table.scrollRectToVisible(table.getCellRect(i, 0, true));
+                        if (StringUtils.isNotBlank(defaultSlug)) {
+                            for (int i = 0; i < questionAnswerList.size(); i++) {
+                                if (questionAnswerList.get(i).getContent().equals(defaultSlug)) {
+                                    openSelectedQuestion(questionAnswerList, i);
+                                    table.setRowSelectionInterval(i, i);
+                                    table.scrollRectToVisible(table.getCellRect(i, 0, true));
+                                }
                             }
                         }
                     }
+                } catch (Exception e) {
+                    myLayout = SplitFileEditor.SplitEditorLayout.FIRST;
+                    adjustEditorsVisibility();
+                    mySplitter.setFirstComponent(new JBLabel(e.getMessage()));
+                } finally {
+                    mySplitter.remove(loadingLabel);
                 }
-            } catch (Exception e) {
-                myLayout = SplitFileEditor.SplitEditorLayout.FIRST;
-                adjustEditorsVisibility();
-                mySplitter.setFirstComponent(new JBLabel(e.getMessage()));
-            } finally {
-                mySplitter.remove(loadingLabel);
-            }
+            });
         });
     }
 
