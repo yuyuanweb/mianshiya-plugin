@@ -13,11 +13,9 @@ import lombok.EqualsAndHashCode;
 public class QuestionBankCategoryBankQueryRequest extends QuestionBankQueryRequest {
 
     /**
-     * todo
      * 题库分类 id
      */
-    // private Long questionBankCategoryId = 1821883295995125761L;
-    private Long questionBankCategoryId = 1821462154457419778L;
+    private Long questionBankCategoryId = 1821883295995125761L;
 
     private static final long serialVersionUID = 1L;
 }
