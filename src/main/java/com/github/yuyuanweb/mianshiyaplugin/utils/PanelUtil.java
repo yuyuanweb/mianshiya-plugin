@@ -98,7 +98,8 @@ public class PanelUtil {
         TableCellRenderer categoryRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if (value instanceof List<?> list) {
+                if (value instanceof List<?>) {
+                    List<?> list = (List<?>) value;
                     JBLabel jbLabel = new JBLabel();
                     jbLabel.setText(list.stream()
                             .map(Object::toString)

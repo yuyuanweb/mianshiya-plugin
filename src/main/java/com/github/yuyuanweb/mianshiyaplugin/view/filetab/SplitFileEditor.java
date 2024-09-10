@@ -191,7 +191,8 @@ public abstract class SplitFileEditor<E1 extends FileEditor, E2 extends FileEdit
 
     @Override
     public void setState(@NotNull FileEditorState state) {
-        if (state instanceof SplitFileEditor.MyFileEditorState compositeState) {
+        if (state instanceof SplitFileEditor.MyFileEditorState) {
+            SplitFileEditor.MyFileEditorState compositeState = (SplitFileEditor.MyFileEditorState) state;
             if (compositeState.getFirstState() != null) {
                 myMainEditor.setState(compositeState.getFirstState());
             }

@@ -286,7 +286,8 @@ public class QuestionListManager {
 
         @Override
         public boolean equals(Object o) {
-            if (o instanceof ComboBoxItem item) {
+            if (o instanceof ComboBoxItem) {
+                ComboBoxItem item = (ComboBoxItem) o;
                 return key.equals(item.key);
             }
             return false;
