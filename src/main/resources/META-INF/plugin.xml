@@ -8,6 +8,11 @@
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
+    <description><![CDATA[
+        <h2>Plugin Introduction</h2>
+        <p>This is a plug-in version of <a href="https://www.mianshiya.com">mianshiya</a> system, which provides a more convenient and flexible way to practice questions.</p>
+    ]]></description>
+
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow canCloseContents="true"
                     icon="/icons/favicon.svg"

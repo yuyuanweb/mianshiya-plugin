@@ -16,11 +16,6 @@
 - [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
-<!-- Plugin description -->
-<h2>Plugin Introduction</h2>
-<p>This is a plug-in version of <a href="https://www.mianshiya.com">mianshiya</a> system, which provides a more convenient and flexible way to practice questions.</p>
-<!-- Plugin description end -->
-
 ## Installation
 
 - Using the IDE built-in plugin system:
