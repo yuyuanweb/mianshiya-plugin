@@ -2,7 +2,6 @@ package com.github.yuyuanweb.mianshiyaplugin.model.response;
 
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -102,6 +101,5 @@ public class QuestionBank implements Serializable {
      */
     private Boolean isAllQuestionVip;
 
-    @Serial
     private static final long serialVersionUID = 1L;
 }

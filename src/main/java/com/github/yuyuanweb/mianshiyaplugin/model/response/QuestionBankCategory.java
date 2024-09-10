@@ -2,7 +2,6 @@ package com.github.yuyuanweb.mianshiyaplugin.model.response;
 
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,7 +12,6 @@ import java.io.Serializable;
 @Data
 public class QuestionBankCategory implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

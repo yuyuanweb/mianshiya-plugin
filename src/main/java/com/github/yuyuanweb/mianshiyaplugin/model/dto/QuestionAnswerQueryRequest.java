@@ -4,7 +4,6 @@ import com.github.yuyuanweb.mianshiyaplugin.model.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -21,7 +20,6 @@ public class QuestionAnswerQueryRequest extends PageRequest implements Serializa
      */
     private Long questionId;
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
 }

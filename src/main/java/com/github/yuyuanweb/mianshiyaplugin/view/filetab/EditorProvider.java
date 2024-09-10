@@ -2,7 +2,6 @@ package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
-import com.github.yuyuanweb.mianshiyaplugin.utils.LogUtils;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.AsyncFileEditorProvider;
 import com.intellij.openapi.fileEditor.FileEditor;

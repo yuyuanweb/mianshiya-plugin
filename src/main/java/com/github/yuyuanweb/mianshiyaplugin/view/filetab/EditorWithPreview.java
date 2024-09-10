@@ -65,7 +65,6 @@ public class EditorWithPreview extends TextEditorWithPreview {
     }
 
     @NotNull
-    @Override
     public FileEditor getPreviewEditor() {
         return myPreview == getTextEditor() ? myEditor : myPreview;
     }
