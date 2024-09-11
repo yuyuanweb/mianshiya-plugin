@@ -45,4 +45,6 @@ public interface KeyConstant {
 
     String EDITOR_FILE_POSTFIX = "msy";
 
+    String EDITOR_FILE_POSTFIX_CONTENT = "msyc";
+
 }

@@ -45,6 +45,7 @@ public class FileUtils {
         if (StrUtil.isBlank(questionTitle)) {
             questionTitle = RandomUtil.randomString(7);
         }
+        // String filePath = FileUtils.getTempDir() + questionNum + ". " + questionTitle.substring(0, 7) + "…" + StrPool.DOT + KeyConstant.EDITOR_FILE_POSTFIX_CONTENT;
         String filePath = FileUtils.getTempDir() + questionNum + ". " + questionTitle.substring(0, 7) + "…";
         File tempFile = FileUtil.touch(filePath);
 

@@ -8,8 +8,10 @@ import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorProvider;
 import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.fileEditor.impl.text.PsiAwareTextEditorProvider;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.util.keyFMap.KeyFMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +28,10 @@ public class EditorProvider extends SplitTextEditorProvider {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
+        // FileType fileType = file.getFileType();
+        // if (fileType == MsycFileType.INSTANCE_C && JBCefApp.isSupported()) {
+        //     return true;
+        // }
         try {
             if (!file.exists()) {
                 return false;
