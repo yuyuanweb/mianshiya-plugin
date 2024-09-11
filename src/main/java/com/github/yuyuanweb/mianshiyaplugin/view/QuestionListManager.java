@@ -33,6 +33,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -121,6 +123,18 @@ public class QuestionListManager {
                 questionQueryRequest.setTitle(text);
             }
         });
+        // 绑定回车键事件
+        searchField.getTextEditor().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    // 回车键按下时执行的操作
+                    String text = searchField.getText();
+                    questionQueryRequest.setTitle(text);
+                    QuestionListManager.this.searchAndLoadData(questionQueryRequest);
+                }
+            }
+        });
 
         searchField.getTextEditor().getEmptyText().setText(TextConstant.TITLE_SEARCH_PLACE_HOLDER);
         JButton searchButton = new JButton(TextConstant.SEARCH);
@@ -139,6 +153,9 @@ public class QuestionListManager {
         return searchPanel;
     }
 
+    /**
+     * 获取筛选框
+     */
     private JPanel getFilterPanel() {
         JPanel filterPanel = new JPanel(new GridLayout(1, 0));
         // 初始化下拉列表
