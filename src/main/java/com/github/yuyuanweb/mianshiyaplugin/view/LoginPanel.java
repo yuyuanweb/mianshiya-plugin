@@ -115,8 +115,10 @@ public class LoginPanel extends DialogWrapper {
 
         @Override
         public void dispose() {
-            getJBCefClient().removeLoadHandler(cefLoadHandler, getCefBrowser());
-            super.dispose();
+            SwingUtilities.invokeLater(() -> {
+                getJBCefClient().removeLoadHandler(cefLoadHandler, getCefBrowser());
+                super.dispose();
+            });
         }
     }
 }
