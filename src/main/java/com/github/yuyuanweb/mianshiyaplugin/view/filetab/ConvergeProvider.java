@@ -36,9 +36,6 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
         final Builder[] builders = new Builder[editorProviders.length];
         for (int i = 0; i < editorProviders.length; i++) {
             FileEditorProvider provider = editorProviders[i];
-            if (provider instanceof AsyncFileEditorProvider) {
-                builders[i] = ((AsyncFileEditorProvider) provider).createEditorAsync(project, file);
-            } else {
                 builders[i] = new Builder() {
                     @NotNull
                     @Override
@@ -46,7 +43,6 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
                         return provider.createEditor(project, file);
                     }
                 };
-            }
         }
         return new Builder() {
             @Override
