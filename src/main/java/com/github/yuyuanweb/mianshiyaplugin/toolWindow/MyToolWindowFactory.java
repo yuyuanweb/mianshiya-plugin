@@ -7,6 +7,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.impl.SimpleDataContext;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
@@ -53,17 +54,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
 
         QuestionBankAction questionBankAction = new QuestionBankAction(mainPanel);
 
-        DataContext dataContext = new DataContext() {
-            @Override
-            public @Nullable Object getData(@NotNull String dataId) {
-                if (CommonDataKeys.PROJECT.is(dataId)) {
-                    // Project object
-                    return project;
-                }
-                // handle other data keys here if needed
-                return null;
-            }
-        };
+        DataContext dataContext = SimpleDataContext.getSimpleContext(CommonDataKeys.PROJECT, project);
 
         // 构建 AnActionEvent 对象
         AnActionEvent event = AnActionEvent.createFromAnAction(questionBankAction, null, "somePlace", dataContext);

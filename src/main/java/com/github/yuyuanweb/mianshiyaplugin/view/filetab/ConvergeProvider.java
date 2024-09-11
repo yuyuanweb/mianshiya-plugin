@@ -35,7 +35,18 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
     public Builder createEditorAsync(@NotNull final Project project, @NotNull final VirtualFile file) {
         final Builder[] builders = new Builder[editorProviders.length];
         for (int i = 0; i < editorProviders.length; i++) {
-            builders[i] = getBuilderFromEditorProvider(editorProviders[i], project, file);
+            FileEditorProvider provider = editorProviders[i];
+            if (provider instanceof AsyncFileEditorProvider) {
+                builders[i] = ((AsyncFileEditorProvider) provider).createEditorAsync(project, file);
+            } else {
+                builders[i] = new Builder() {
+                    @NotNull
+                    @Override
+                    public FileEditor build() {
+                        return provider.createEditor(project, file);
+                    }
+                };
+            }
         }
         return new Builder() {
             @Override
@@ -73,18 +84,4 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
         return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
     }
 
-    @NotNull
-    public static Builder getBuilderFromEditorProvider(@NotNull final FileEditorProvider provider, @NotNull final Project project, @NotNull final VirtualFile file) {
-        if (provider instanceof AsyncFileEditorProvider) {
-            return ((AsyncFileEditorProvider) provider).createEditorAsync(project, file);
-        } else {
-            return new Builder() {
-                @NotNull
-                @Override
-                public FileEditor build() {
-                    return provider.createEditor(project, file);
-                }
-            };
-        }
-    }
 }
