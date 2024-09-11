@@ -23,9 +23,10 @@
         <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.EditorProvider"/>
         <fileType name="msyQUESTION" extensions="msy;" fileNames=".msy" language="msyQUESTION"
                   implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonFileType" fieldName="INSTANCE"/>
-        <!--<fileType name="msycQUESTION" extensions="msyc;" fileNames=".msyc" language="msycQUESTION"-->
-        <!--          implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.MsycFileType" fieldName="INSTANCE_C"/>-->
+        <fileType name="msycQUESTION" extensions="msyc;" fileNames=".msyc" language="msycQUESTION"
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.MsycFileType" fieldName="INSTANCE_C"/>
         <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonProvider"/>
+        <editorTabTitleProvider implementation="com.github.yuyuanweb.mianshiyaplugin.temp.CustomTabTitleProvider" order="last"/>
     </extensions>
 
     <applicationListeners>

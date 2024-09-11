@@ -22,6 +22,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class FileUtils {
 
+    public static int FILE_NAME_LENGTH = 7;
+
     public static String getTempDir() {
         return FileUtil.getTmpDirPath() + "mianshiya/";
     }
@@ -43,10 +45,15 @@ public class FileUtils {
 
         // 创建一个临时文件并写入内容
         if (StrUtil.isBlank(questionTitle)) {
-            questionTitle = RandomUtil.randomString(7);
+            questionTitle = RandomUtil.randomString(FILE_NAME_LENGTH);
         }
-        // String filePath = FileUtils.getTempDir() + questionNum + ". " + questionTitle.substring(0, 7) + "…" + StrPool.DOT + KeyConstant.EDITOR_FILE_POSTFIX_CONTENT;
-        String filePath = FileUtils.getTempDir() + questionNum + ". " + questionTitle.substring(0, 7) + "…";
+        String fileName;
+        if (questionTitle.length() > FILE_NAME_LENGTH) {
+            fileName = questionTitle.substring(0, FILE_NAME_LENGTH) + "…";
+        } else {
+            fileName = questionTitle;
+        }
+        String filePath = FileUtils.getTempDir() + questionNum + ". " + fileName + StrPool.DOT + KeyConstant.EDITOR_FILE_POSTFIX_CONTENT;
         File tempFile = FileUtil.touch(filePath);
 
         if (!tempFile.exists()) {

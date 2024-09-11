@@ -28,10 +28,10 @@ public class EditorProvider extends SplitTextEditorProvider {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
-        // FileType fileType = file.getFileType();
-        // if (fileType == MsycFileType.INSTANCE_C && JBCefApp.isSupported()) {
-        //     return true;
-        // }
+        FileType fileType = file.getFileType();
+        if (fileType == MsycFileType.INSTANCE_C && JBCefApp.isSupported()) {
+            return true;
+        }
         try {
             if (!file.exists()) {
                 return false;

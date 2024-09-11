@@ -40,6 +40,6 @@ public class MsycFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return AllIcons.Actions.AddFile;
+        return null;
     }
 }
