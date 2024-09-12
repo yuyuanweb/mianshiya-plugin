@@ -73,7 +73,8 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
             myComponent = JBUI.Panels.simplePanel();
             jbScrollPane = new JBScrollPane(JBScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JBScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             myComponent.addToCenter(jbScrollPane);
-            if (isLoad) {
+            // QUESTION 类型会在构造函数中初始化，所以这里不需要
+            if (isLoad && !WebTypeEnum.QUESTION.equals(webTypeEnum)) {
                 initComponent();
             }
         }
@@ -113,6 +114,7 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
                 myComponent.removeAll();
                 myComponent.addToTop(tipPanel);
                 myComponent.repaint();
+                return;
             }
         }
 
