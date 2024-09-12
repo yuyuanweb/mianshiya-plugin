@@ -88,7 +88,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         actionGroup.add(questionAction);
         actionManager.registerAction(QUESTION, questionAction);
 
-        OpenUrlAction webAction = new OpenUrlAction(WEB_ZH, CommonConstant.WEB_HOST, AllIcons.Ide.External_link_arrow);
+        OpenUrlAction webAction = new OpenUrlAction(WEB_ZH, CommonConstant.WEB_HOST, IconConstant.WEB);
         actionGroup.add(webAction);
         actionManager.registerAction(WEB, webAction);
 
@@ -99,14 +99,14 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         GlobalState globalState = GlobalState.getInstance();
         String cookie = globalState.getSavedCookie();
         if (StrUtil.isBlank(cookie)) {
-            LoginAction loginAction = new LoginAction(LOGIN_ZH, AllIcons.General.User, actionGroup);
+            LoginAction loginAction = new LoginAction(LOGIN_ZH, IconConstant.LOGIN, actionGroup);
             actionGroup.add(loginAction);
             actionManager.registerAction(LOGIN, loginAction);
         } else {
             User loginUser = globalState.getSavedUser();
             // 未登录
             if (loginUser == null) {
-                LoginAction loginAction = new LoginAction(LOGIN_ZH, AllIcons.General.User, actionGroup);
+                LoginAction loginAction = new LoginAction(LOGIN_ZH, IconConstant.LOGIN, actionGroup);
                 actionGroup.add(loginAction);
                 actionManager.registerAction(LOGIN, loginAction);
             } else {
@@ -114,7 +114,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
                 actionGroup.add(vipAction);
                 actionManager.registerAction(VIP, vipAction);
 
-                LogoutAction logoutAction = new LogoutAction(LOGOUT_ZH, AllIcons.Actions.Exit, actionGroup);
+                LogoutAction logoutAction = new LogoutAction(LOGOUT_ZH, IconConstant.LOGOUT, actionGroup);
                 actionGroup.add(logoutAction);
                 actionManager.registerAction(LOGOUT, logoutAction);
 

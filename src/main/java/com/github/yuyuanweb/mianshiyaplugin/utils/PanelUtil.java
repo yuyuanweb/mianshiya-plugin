@@ -1,13 +1,18 @@
 package com.github.yuyuanweb.mianshiyaplugin.utils;
 
+import com.github.yuyuanweb.mianshiyaplugin.actions.LogoutAction;
+import com.github.yuyuanweb.mianshiyaplugin.actions.OpenUrlAction;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
-import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
-import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
-import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
+import com.github.yuyuanweb.mianshiyaplugin.constant.*;
+import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.github.yuyuanweb.mianshiyaplugin.view.MTabModel;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.BrowserUtil;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.JBColor;
@@ -30,6 +35,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+
+import static com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant.LOGOUT_ZH;
+import static com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant.PAGE_SIZE;
 
 /**
  * @author pine
@@ -126,8 +134,8 @@ public class PanelUtil {
 
     public static void updatePaginationPanel(JBPanel<?> paginationPanel, long total, int[] currentPage, BiConsumer<Integer, Integer> loadPage) {
         paginationPanel.removeAll();
-        int pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
-        long totalPage = (total / pageSize) + 1;
+        // int pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
+        long totalPage = (total / PAGE_SIZE) + 1;
 
         JBLabel pageLabel = new JBLabel("第 " + currentPage[0] + " / " + totalPage + " 页");
 
@@ -140,14 +148,14 @@ public class PanelUtil {
         prevButton.addActionListener(e -> {
             if (currentPage[0] > 1) {
                 currentPage[0]--;
-                loadPage.accept(currentPage[0], pageSize);
+                loadPage.accept(currentPage[0], PAGE_SIZE);
             }
         });
 
         nextButton.addActionListener(e -> {
             if (currentPage[0] < totalPage) {
                 currentPage[0]++;
-                loadPage.accept(currentPage[0], pageSize);
+                loadPage.accept(currentPage[0], PAGE_SIZE);
             }
         });
 
@@ -182,6 +190,30 @@ public class PanelUtil {
         };
         needLoginPanel.add(new JBOptionButton(needVipAction, null));
         return needLoginPanel;
+    }
+
+    public static void modifyActionGroupWhenLogin(DefaultActionGroup actionGroup, User loginUser) {
+        ApplicationManager.getApplication().invokeLater(() -> {
+            ActionManager actionManager = ActionManager.getInstance();
+
+            // 删除 登录
+            AnAction loginAction = actionManager.getAction(KeyConstant.LOGIN);
+            if (loginAction == null) {
+                return;
+            }
+            actionGroup.remove(loginAction);
+            actionManager.unregisterAction(KeyConstant.LOGIN);
+
+            // 增加 会员
+            OpenUrlAction vipAction = new OpenUrlAction(loginUser.getUserName(), CommonConstant.VIP, AllIcons.General.User);
+            actionGroup.add(vipAction);
+            actionManager.registerAction(KeyConstant.VIP, vipAction);
+
+            // 增加 注销
+            LogoutAction logoutAction = new LogoutAction(LOGOUT_ZH, IconConstant.LOGOUT, actionGroup);
+            actionGroup.add(logoutAction);
+            actionManager.registerAction(KeyConstant.LOGOUT, logoutAction);
+        });
     }
 
 }

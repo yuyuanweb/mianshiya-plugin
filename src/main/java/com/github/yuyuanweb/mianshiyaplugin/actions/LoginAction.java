@@ -6,6 +6,7 @@ import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.manager.CookieManager;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
+import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
 import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionManager;
@@ -52,24 +53,8 @@ public class LoginAction extends AnAction implements DumbAware {
             if (loginUser == null) {
                 return;
             }
-            ApplicationManager.getApplication().invokeLater(() -> {
-                ActionManager actionManager = ActionManager.getInstance();
 
-                // 3.1 删除 登录
-                AnAction loginAction = actionManager.getAction(KeyConstant.LOGIN);
-                actionGroup.remove(loginAction);
-                actionManager.unregisterAction(KeyConstant.LOGIN);
-
-                // 3.2 增加 会员
-                OpenUrlAction vipAction = new OpenUrlAction(loginUser.getUserName(), CommonConstant.VIP, AllIcons.General.User);
-                actionGroup.add(vipAction);
-                actionManager.registerAction(KeyConstant.VIP, vipAction);
-
-                // 3.3 增加 注销
-                LogoutAction logoutAction = new LogoutAction(LOGOUT_ZH, AllIcons.Actions.Exit, actionGroup);
-                actionGroup.add(logoutAction);
-                actionManager.registerAction(KeyConstant.LOGOUT, logoutAction);
-            });
+            PanelUtil.modifyActionGroupWhenLogin(actionGroup, loginUser);
         });
 
     }

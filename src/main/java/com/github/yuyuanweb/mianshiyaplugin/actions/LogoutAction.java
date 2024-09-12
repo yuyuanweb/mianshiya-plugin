@@ -3,6 +3,7 @@ package com.github.yuyuanweb.mianshiyaplugin.actions;
 import cn.hutool.core.util.BooleanUtil;
 import com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
+import com.github.yuyuanweb.mianshiyaplugin.constant.IconConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.BaseResponse;
 import com.intellij.icons.AllIcons;
@@ -67,7 +68,7 @@ public class LogoutAction extends AnAction implements DumbAware {
                 actionManager.unregisterAction(KeyConstant.VIP);
 
                 // 3.3 增加 登录
-                LoginAction loginAction = new LoginAction(LOGIN_ZH, AllIcons.General.User, actionGroup);
+                LoginAction loginAction = new LoginAction(LOGIN_ZH, IconConstant.LOGIN, actionGroup);
                 actionGroup.add(loginAction);
                 actionManager.registerAction(LOGIN, loginAction);
             });

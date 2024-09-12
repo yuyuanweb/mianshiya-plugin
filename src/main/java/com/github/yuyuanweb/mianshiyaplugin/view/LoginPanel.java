@@ -1,9 +1,18 @@
 package com.github.yuyuanweb.mianshiyaplugin.view;
 
+import com.github.yuyuanweb.mianshiyaplugin.actions.LogoutAction;
+import com.github.yuyuanweb.mianshiyaplugin.actions.OpenUrlAction;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
+import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.manager.CookieManager;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
+import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Disposer;
@@ -22,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant.LOGOUT_ZH;
 
 /**
  * @author pine
@@ -66,6 +77,15 @@ public class LoginPanel extends DialogWrapper {
         return okAction;
     }
 
+    @Override
+    protected void doOKAction() {
+        super.doOKAction();
+
+        ActionManager actionManager = ActionManager.getInstance();
+        DefaultActionGroup actionGroup = (DefaultActionGroup) actionManager.getAction(KeyConstant.ACTION_BAR);
+        User loginUser = GlobalState.getInstance().getSavedUser();
+        PanelUtil.modifyActionGroupWhenLogin(actionGroup, loginUser);
+    }
 
     private class JcefPanel extends JCEFHtmlPanel {
 

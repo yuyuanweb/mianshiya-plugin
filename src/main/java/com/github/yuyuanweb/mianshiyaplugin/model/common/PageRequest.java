@@ -1,6 +1,7 @@
 package com.github.yuyuanweb.mianshiyaplugin.model.common;
 
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
+import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
 import lombok.Data;
 
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class PageRequest {
     /**
      * 页面大小
      */
-    private long pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
+    // private long pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
+    private long pageSize = PageConstant.PAGE_SIZE;
 
 }
