@@ -18,10 +18,10 @@ public interface KeyConstant {
 
     Key<WebTypeEnum> WEB_TYPE_KEY = new Key<>(KeyConstant.WEB_TYPE);
 
-    String QUESTION_BANK_ZH = "题库";
+    String QUESTION_BANK_ZH = "题库大全";
     String QUESTION_BANK = "QUESTION_BANK";
 
-    String QUESTION_ZH = "题目";
+    String QUESTION_ZH = "题目大全";
     String QUESTION = "QUESTION";
 
     String WEB_ZH = "网页端";
