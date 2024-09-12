@@ -129,7 +129,7 @@ public class PanelUtil {
         int pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
         long totalPage = (total / pageSize) + 1;
 
-        JBLabel pageLabel = new JBLabel("第 " + currentPage[0] + " 页，共 " + totalPage + " 页");
+        JBLabel pageLabel = new JBLabel("第 " + currentPage[0] + " / " + totalPage + " 页");
 
         JButton prevButton = new JButton("上一页");
         JButton nextButton = new JButton("下一页");
