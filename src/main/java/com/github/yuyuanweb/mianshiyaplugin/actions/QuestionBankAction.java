@@ -1,6 +1,7 @@
 package com.github.yuyuanweb.mianshiyaplugin.actions;
 
 import com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig;
+import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.Page;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.PageRequest;
@@ -41,6 +42,7 @@ public class QuestionBankAction extends AnAction {
     private JBPanel<?> mainPanel;
 
     private final int[] currentPage = new int[]{1};
+    private final QuestionBankCategoryBankQueryRequest queryRequest = new QuestionBankCategoryBankQueryRequest();
 
     public QuestionBankAction() {
     }
@@ -88,6 +90,9 @@ public class QuestionBankAction extends AnAction {
         }
     }
 
+    /**
+     * 加载顶部标签数据
+     */
     private void loadLabelPanel() {
         labelPanel = new JBPanel<>(new WrapLayout(FlowLayout.LEFT, 5, 5));
         ApplicationManager.getApplication().executeOnPooledThread(() -> {
@@ -109,8 +114,9 @@ public class QuestionBankAction extends AnAction {
                     label.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            QuestionBankCategoryBankQueryRequest queryRequest = new QuestionBankCategoryBankQueryRequest();
+                            currentPage[0] = PageConstant.FIRST_PAGE;
                             queryRequest.setQuestionBankCategoryId(tag.getId());
+                            queryRequest.setCurrent(PageConstant.FIRST_PAGE);
                             searchAndLoadData(queryRequest);
                         }
 
@@ -157,7 +163,6 @@ public class QuestionBankAction extends AnAction {
 
     private void loadPage(int page, int pageSize) {
         // 实现分页逻辑，并更新表格数据
-        QuestionBankCategoryBankQueryRequest queryRequest = new QuestionBankCategoryBankQueryRequest();
         queryRequest.setPageSize(pageSize);
         queryRequest.setCurrent(page);
         this.searchAndLoadData(queryRequest);
@@ -165,7 +170,7 @@ public class QuestionBankAction extends AnAction {
 
     private void loadDataTable(JBPanel<?> tabPanel, Project project) {
         ApplicationManager.getApplication().executeOnPooledThread(() -> {
-            Page<QuestionBank> data = this.fetchDataFromApi(new QuestionBankCategoryBankQueryRequest());
+            Page<QuestionBank> data = this.fetchDataFromApi(queryRequest);
             // 创建表格数据模型
             ApplicationManager.getApplication().invokeLater(() -> {
                 tableModel = new MTabModel();

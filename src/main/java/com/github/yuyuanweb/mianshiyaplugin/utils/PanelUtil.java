@@ -151,22 +151,6 @@ public class PanelUtil {
             }
         });
 
-        ComboBox<Integer> pageSizeComboBox = new ComboBox<>();
-        for (int size : PageConstant.PAGE_SIZES) {
-            pageSizeComboBox.addItem(size);
-        }
-        pageSizeComboBox.setSelectedItem(pageSize);
-        pageSizeComboBox.addActionListener(e -> {
-            GlobalState.getInstance().getState().pageSize = (int) pageSizeComboBox.getSelectedItem();
-            int newPageSize = GlobalState.getInstance().getState().pageSize;
-            pageSizeComboBox.setSelectedItem(newPageSize);
-            // 重置为第一页
-            currentPage[0] = 1;
-            loadPage.accept(currentPage[0], newPageSize);
-        });
-
-        paginationPanel.add(new JBLabel("每页:"));
-        paginationPanel.add(pageSizeComboBox);
         paginationPanel.add(prevButton);
         paginationPanel.add(pageLabel);
         paginationPanel.add(nextButton);

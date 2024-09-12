@@ -2,6 +2,7 @@ package com.github.yuyuanweb.mianshiyaplugin.view;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;
+import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.BaseResponse;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.Page;
@@ -255,6 +256,8 @@ public class QuestionListManager {
                         comboBoxLastSelectedItem[lastSelectedIndex] = selectedIndex;
                         ignoreAction = false;
 
+                        questionQueryRequest.setCurrent(PageConstant.FIRST_PAGE);
+                        currentPage[0] = PageConstant.FIRST_PAGE;
                         QuestionListManager.this.searchAndLoadData(questionQueryRequest);
                     }
                 });
