@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * 分栏 文件编辑器
+ *
  * @author pine
  */
 public class EditorWithPreview extends TextEditorWithPreview {

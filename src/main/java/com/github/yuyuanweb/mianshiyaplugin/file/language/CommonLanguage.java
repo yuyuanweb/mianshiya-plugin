@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.language;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.intellij.lang.Language;

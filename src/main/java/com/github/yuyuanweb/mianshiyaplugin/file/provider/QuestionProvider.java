@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
 import cn.hutool.core.io.FileUtil;
 import com.github.yuyuanweb.mianshiyaplugin.utils.FileUtils;
@@ -8,9 +8,10 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-
 /**
+ * 问题页面
+ * 已废弃
+ *
  * @author pine
  */
 public class QuestionProvider extends CommonProvider {

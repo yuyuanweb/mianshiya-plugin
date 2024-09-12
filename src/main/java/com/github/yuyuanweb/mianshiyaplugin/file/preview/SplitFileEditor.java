@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
@@ -13,7 +13,6 @@ import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.UserDataHolderBase;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.ui.JBSplitter;
@@ -31,6 +30,8 @@ import java.util.Map;
 import static com.intellij.openapi.fileEditor.TextEditorWithPreview.DEFAULT_LAYOUT_FOR_FILE;
 
 /**
+ * 分栏 文件编辑器
+ *
  * @author pine
  */
 public abstract class SplitFileEditor<E1 extends FileEditor, E2 extends FileEditor> extends UserDataHolderBase implements FileEditor {

@@ -1,14 +1,12 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
-import com.github.yuyuanweb.mianshiyaplugin.model.response.Question;
-import com.github.yuyuanweb.mianshiyaplugin.model.response.QuestionAnswer;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
-import com.github.yuyuanweb.mianshiyaplugin.temp.BrowserFileEditorProvider;
+import com.github.yuyuanweb.mianshiyaplugin.file.provider.BrowserFileEditorProvider;
 import com.github.yuyuanweb.mianshiyaplugin.utils.FileUtils;
 import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
 import com.github.yuyuanweb.mianshiyaplugin.utils.UserUtil;
@@ -35,12 +33,12 @@ import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-import static com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig.mianShiYaApi;
-
 /**
+ * 内嵌浏览器外层 文件编辑器
+ *
  * @author pine
  */
-public class BestQuestionAnswerPreview extends UserDataHolderBase implements FileEditor {
+public class OuterBrowserFileEditorPreview extends UserDataHolderBase implements FileEditor {
 
     private final Project project;
 
@@ -58,7 +56,7 @@ public class BestQuestionAnswerPreview extends UserDataHolderBase implements Fil
 
     private final WebTypeEnum webTypeEnum;
 
-    public BestQuestionAnswerPreview(Project project, VirtualFile file, WebTypeEnum webTypeEnum) {
+    public OuterBrowserFileEditorPreview(Project project, VirtualFile file, WebTypeEnum webTypeEnum) {
         this.project = project;
         this.file = file;
         this.webTypeEnum = webTypeEnum;

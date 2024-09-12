@@ -1,18 +1,19 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
-import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
+import com.github.yuyuanweb.mianshiyaplugin.file.preview.BrowserFileEditor;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
-import com.intellij.openapi.fileEditor.WeighedFileEditorProvider;
+import com.intellij.openapi.fileEditor.FileEditorProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * 内嵌浏览器 提供者
+ *
  * @author pine
  */
-public class QuestionAnswerProvider extends WeighedFileEditorProvider {
-
+public class BrowserFileEditorProvider implements FileEditorProvider {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
@@ -21,16 +22,16 @@ public class QuestionAnswerProvider extends WeighedFileEditorProvider {
 
     @Override
     public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
-        return new QuestionAnswerPreview(project, file);
+        return new BrowserFileEditor(project, file);
     }
 
     @Override
     public @NotNull String getEditorTypeId() {
-        return ViewConstant.QUESTION_ANSWER_PROVIDER;
+        return "browser-file-editor";
     }
 
     @Override
     public @NotNull FileEditorPolicy getPolicy() {
-        return FileEditorPolicy.HIDE_DEFAULT_EDITOR;
+        return FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR;
     }
 }

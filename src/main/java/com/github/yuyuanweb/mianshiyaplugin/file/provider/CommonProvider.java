@@ -1,6 +1,8 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
+import com.github.yuyuanweb.mianshiyaplugin.file.type.CommonFileType;
+import com.github.yuyuanweb.mianshiyaplugin.file.preview.CommonPreview;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
 import com.intellij.openapi.fileEditor.WeighedFileEditorProvider;

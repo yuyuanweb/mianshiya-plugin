@@ -1,7 +1,9 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
+import com.github.yuyuanweb.mianshiyaplugin.file.preview.EditorWithPreview;
+import com.github.yuyuanweb.mianshiyaplugin.file.type.MsycFileType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.AsyncFileEditorProvider;
 import com.intellij.openapi.fileEditor.FileEditor;
@@ -23,7 +25,7 @@ public class EditorProvider extends SplitTextEditorProvider {
     public static final Logger LOG = Logger.getInstance("#com.github.yuyuanweb.mianshiyaplugin");
 
     public EditorProvider() {
-        super(new PsiAwareTextEditorProvider(), new ConvergeProvider(new FileEditorProvider[]{new BestQuestionAnswerProvider(WebTypeEnum.QUESTION), new BestQuestionAnswerProvider(WebTypeEnum.ANSWER), new BestQuestionAnswerProvider(WebTypeEnum.COMMENT)}, new String[]{"题目", "推荐答案", "讨论区"}));
+        super(new PsiAwareTextEditorProvider(), new ConvergeProvider(new FileEditorProvider[]{new OuterBrowserFileEditorProvider(WebTypeEnum.QUESTION), new OuterBrowserFileEditorProvider(WebTypeEnum.ANSWER), new OuterBrowserFileEditorProvider(WebTypeEnum.COMMENT)}, new String[]{"题目", "推荐答案", "讨论区"}));
     }
 
     @Override

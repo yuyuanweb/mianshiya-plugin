@@ -1,6 +1,7 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.type;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
+import com.github.yuyuanweb.mianshiyaplugin.file.language.MsycLanguage;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.util.IconLoader;
 import org.jetbrains.annotations.NotNull;

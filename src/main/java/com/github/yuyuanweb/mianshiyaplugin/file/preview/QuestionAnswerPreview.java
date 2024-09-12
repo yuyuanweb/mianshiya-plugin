@@ -1,6 +1,6 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
-import com.github.yuyuanweb.mianshiyaplugin.constant.ErrorCode;
+import com.github.yuyuanweb.mianshiyaplugin.model.enums.ErrorCode;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
@@ -11,6 +11,7 @@ import com.github.yuyuanweb.mianshiyaplugin.model.response.QuestionAnswer;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.github.yuyuanweb.mianshiyaplugin.utils.FileUtils;
 import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
+import com.github.yuyuanweb.mianshiyaplugin.file.provider.QuestionProvider;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
@@ -49,7 +50,8 @@ import static com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig.mianShiYaApi
 import static com.intellij.openapi.actionSystem.ActionPlaces.TEXT_EDITOR_WITH_PREVIEW;
 
 /**
- * 回答页
+ * 回答 文件编辑器
+ * 已废弃，不再使用
  *
  * @author pine
  */

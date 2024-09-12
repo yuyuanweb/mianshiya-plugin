@@ -3,7 +3,7 @@ package com.github.yuyuanweb.mianshiyaplugin.api.interceptor;
 import cn.hutool.json.JSONUtil;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
-import com.github.yuyuanweb.mianshiyaplugin.constant.ErrorCode;
+import com.github.yuyuanweb.mianshiyaplugin.model.enums.ErrorCode;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.BaseResponse;
 import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.intellij.openapi.project.ProjectManager;

@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.temp;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
@@ -23,6 +23,8 @@ import java.awt.*;
 import java.beans.PropertyChangeListener;
 
 /**
+ * 内嵌浏览器 文件编辑器
+ *
  * @author pine
  */
 public class BrowserFileEditor implements FileEditor {

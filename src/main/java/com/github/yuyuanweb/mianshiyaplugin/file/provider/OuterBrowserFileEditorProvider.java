@@ -1,7 +1,8 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
+import com.github.yuyuanweb.mianshiyaplugin.file.preview.OuterBrowserFileEditorPreview;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
 import com.intellij.openapi.fileEditor.WeighedFileEditorProvider;
@@ -12,14 +13,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author pine
  */
-public class BestQuestionAnswerProvider extends WeighedFileEditorProvider {
+public class OuterBrowserFileEditorProvider extends WeighedFileEditorProvider {
 
     private WebTypeEnum webTypeEnum;
 
-    public BestQuestionAnswerProvider() {
+    public OuterBrowserFileEditorProvider() {
     }
 
-    public BestQuestionAnswerProvider(WebTypeEnum webTypeEnum) {
+    public OuterBrowserFileEditorProvider(WebTypeEnum webTypeEnum) {
         this.webTypeEnum = webTypeEnum;
     }
 
@@ -30,7 +31,7 @@ public class BestQuestionAnswerProvider extends WeighedFileEditorProvider {
 
     @Override
     public @NotNull FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile file) {
-        return new BestQuestionAnswerPreview(project, file, webTypeEnum);
+        return new OuterBrowserFileEditorPreview(project, file, webTypeEnum);
     }
 
     @Override

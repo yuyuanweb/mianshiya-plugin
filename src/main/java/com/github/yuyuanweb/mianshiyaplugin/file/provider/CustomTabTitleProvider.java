@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.temp;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.intellij.openapi.fileEditor.impl.EditorTabTitleProvider;
@@ -7,6 +7,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * 自定义 tab 栏的文件名
+ *
  * @author pine
  */
 public class CustomTabTitleProvider implements EditorTabTitleProvider {

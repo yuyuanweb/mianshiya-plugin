@@ -8,9 +8,9 @@ import com.intellij.openapi.diagnostic.Logger;
 /**
  * @author pine
  */
-public class MyApplicationActivationListener implements AppLifecycleListener {
+public class ApplicationLifecycleListener implements AppLifecycleListener {
 
-    private static final Logger logger = Logger.getInstance(MyApplicationActivationListener.class);
+    private static final Logger logger = Logger.getInstance(ApplicationLifecycleListener.class);
 
     @Override
     public void appWillBeClosed(boolean isRestart) {

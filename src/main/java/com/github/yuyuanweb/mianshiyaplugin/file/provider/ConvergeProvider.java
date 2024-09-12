@@ -1,5 +1,6 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.provider;
 
+import com.github.yuyuanweb.mianshiyaplugin.file.preview.ConvergePreview;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
@@ -11,6 +12,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
+ * 聚合 提供者
+ *
  * @author pine
  */
 public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
@@ -36,13 +39,13 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
         final Builder[] builders = new Builder[editorProviders.length];
         for (int i = 0; i < editorProviders.length; i++) {
             FileEditorProvider provider = editorProviders[i];
-                builders[i] = new Builder() {
-                    @NotNull
-                    @Override
-                    public FileEditor build() {
-                        return provider.createEditor(project, file);
-                    }
-                };
+            builders[i] = new Builder() {
+                @NotNull
+                @Override
+                public FileEditor build() {
+                    return provider.createEditor(project, file);
+                }
+            };
         }
         return new Builder() {
             @Override
@@ -51,7 +54,7 @@ public class ConvergeProvider implements AsyncFileEditorProvider, DumbAware {
                 for (int i = 0; i < builders.length; i++) {
                     fileEditors[i] = builders[i].build();
                 }
-                return createSplitEditor(fileEditors,project,file);
+                return createSplitEditor(fileEditors, project, file);
             }
         };
     }

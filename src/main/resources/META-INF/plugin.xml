@@ -20,17 +20,17 @@
         </toolWindow>
         <applicationService serviceImplementation="com.github.yuyuanweb.mianshiyaplugin.config.GlobalState"/>
 
-        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.EditorProvider"/>
+        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.EditorProvider"/>
         <fileType name="msyQUESTION" extensions="msy;" fileNames=".msy" language="msyQUESTION"
-                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonFileType" fieldName="INSTANCE"/>
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.CommonFileType" fieldName="INSTANCE"/>
         <fileType name="msycQUESTION" extensions="msyc;" fileNames=".msyc" language="msycQUESTION"
-                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.view.filetab.MsycFileType" fieldName="INSTANCE_C"/>
-        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.view.filetab.CommonProvider"/>
-        <editorTabTitleProvider implementation="com.github.yuyuanweb.mianshiyaplugin.temp.CustomTabTitleProvider" order="last"/>
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.MsycFileType" fieldName="INSTANCE_C"/>
+        <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.CommonProvider"/>
+        <editorTabTitleProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.CustomTabTitleProvider" order="last"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.yuyuanweb.mianshiyaplugin.listeners.MyApplicationActivationListener"
+        <listener class="com.github.yuyuanweb.mianshiyaplugin.listeners.ApplicationLifecycleListener"
                   topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>
 

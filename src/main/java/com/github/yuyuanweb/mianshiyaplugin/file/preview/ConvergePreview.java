@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.openapi.diagnostic.Logger;
@@ -26,7 +26,7 @@ import javax.swing.*;
 import java.beans.PropertyChangeListener;
 
 /**
- * 聚合
+ * 聚合多个编辑器 文件编辑器
  *
  * @author pine
  */

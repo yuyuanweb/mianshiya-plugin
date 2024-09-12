@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.constant;
+package com.github.yuyuanweb.mianshiyaplugin.model.enums;
 
 /**
  * 错误码

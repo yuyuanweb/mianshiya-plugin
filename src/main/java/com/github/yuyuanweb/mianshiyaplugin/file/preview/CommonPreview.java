@@ -1,4 +1,4 @@
-package com.github.yuyuanweb.mianshiyaplugin.view.filetab;
+package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.openapi.editor.Document;
@@ -22,6 +22,8 @@ import java.awt.*;
 import java.beans.PropertyChangeListener;
 
 /**
+ * 普通 文件编辑器
+ *
  * @author pine
  */
 public class CommonPreview extends UserDataHolderBase implements FileEditor {
