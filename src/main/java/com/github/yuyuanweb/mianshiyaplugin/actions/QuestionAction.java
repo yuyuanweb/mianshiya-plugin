@@ -7,21 +7,21 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
+/**
+ * @author pine
+ */
 public class QuestionAction extends AnAction {
 
-    private final QuestionListManager questionListManager;
-
     public QuestionAction() {
-        questionListManager = new QuestionListManager();
     }
 
     public QuestionAction(String text, Icon icon) {
         super(text, text, icon);
-        questionListManager = new QuestionListManager();
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+        QuestionListManager questionListManager = new QuestionListManager();
         questionListManager.addQuestionTab(null, anActionEvent.getProject());
     }
 

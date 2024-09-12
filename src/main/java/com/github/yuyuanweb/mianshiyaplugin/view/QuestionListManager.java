@@ -26,16 +26,14 @@ import com.intellij.openapi.project.Project;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -62,6 +60,9 @@ public class QuestionListManager {
     int tagLastSelectedIndex = 1;
     int difficultyLastSelectedIndex = 2;
     int needVipLastSelectedIndex = 3;
+
+    private boolean firstResize = true;
+
     private final List<ComboBoxItem> difficultyComboBoxItems = Arrays.stream(QuestionDifficultyEnum.values())
             .map(item -> new ComboBoxItem(String.valueOf(item.getValue()), item.getText()))
             .collect(Collectors.toList());
@@ -354,11 +355,37 @@ public class QuestionListManager {
                 }, 3);
 
                 // 设置列宽为0，使列存在但不可见
-                TableColumn column = table.getColumnModel().getColumn(4);
+                // 获取表格列模型
+                TableColumnModel columnModel = table.getColumnModel();
+                TableColumn column = columnModel.getColumn(4);
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
                 column.setPreferredWidth(0);
                 table.setFillsViewportHeight(true);
+
+                // 添加监听器，监听 table 大小变化
+                table.addComponentListener(new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        if (!firstResize) {
+                            return;
+                        }
+                        firstResize = false;
+                        // 获取当前宽度
+                        int width = table.getWidth();
+
+                        // 根据 Tool Window 的宽度调整列宽比例
+                        // 标题占 60%
+                        columnModel.getColumn(1).setPreferredWidth((int) (width * 0.60));
+                        // 难度占 10%
+                        columnModel.getColumn(2).setPreferredWidth((int) (width * 0.10));
+                        // 标签占 30%
+                        columnModel.getColumn(3).setPreferredWidth((int) (width * 0.30));
+
+                        // 重新布局表格
+                        table.revalidate();
+                    }
+                });
 
                 // 将表格添加到滚动面板
                 JBScrollPane scrollPane = new JBScrollPane(table);
