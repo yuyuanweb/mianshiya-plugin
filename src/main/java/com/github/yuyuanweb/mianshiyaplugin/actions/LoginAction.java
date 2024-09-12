@@ -8,7 +8,6 @@ import com.github.yuyuanweb.mianshiyaplugin.manager.CookieManager;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
 import com.intellij.icons.AllIcons;
-import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

@@ -28,7 +28,7 @@ dependencies {
     implementation(libs.hutool)
     implementation(libs.retrofit2)
     implementation(libs.converter.gson)
-    implementation(libs.flexmark)
+//    implementation(libs.flexmark)
 
 }
 

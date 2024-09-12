@@ -18,7 +18,7 @@ qodana = "2024.1.9"
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
-hutool = { group = "cn.hutool", name = "hutool-all", version.ref = "hutool" }
+hutool = { group = "cn.hutool", name = "hutool-core", version.ref = "hutool" }
 retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson" }
 flexmark = { group = "com.vladsch.flexmark", name = "flexmark", version.ref = "flexmark" }
