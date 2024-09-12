@@ -1,9 +1,9 @@
 package com.github.yuyuanweb.mianshiyaplugin.file.type;
 
+import com.github.yuyuanweb.mianshiyaplugin.constant.IconConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.file.language.MsycLanguage;
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.util.IconLoader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,8 +13,6 @@ import javax.swing.*;
  * @author pine
  */
 public class MsycFileType extends LanguageFileType {
-
-    public static final Icon ICON = IconLoader.findIcon("/icons/favicon.svg");
 
     public static final MsycFileType INSTANCE_C = new MsycFileType();
 
@@ -43,6 +41,6 @@ public class MsycFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return ICON;
+        return IconConstant.LOGO;
     }
 }

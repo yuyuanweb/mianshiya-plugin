@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.yuyuanweb.mianshiyaplugin.actions.*;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
+import com.github.yuyuanweb.mianshiyaplugin.constant.IconConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
@@ -91,7 +92,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         actionGroup.add(webAction);
         actionManager.registerAction(WEB, webAction);
 
-        OpenUrlAction helpDocAction = new OpenUrlAction(HELP_ZH, CommonConstant.HELP_DOC, AllIcons.Actions.Help);
+        OpenUrlAction helpDocAction = new OpenUrlAction(HELP_ZH, CommonConstant.HELP_DOC, IconConstant.HELP);
         actionGroup.add(helpDocAction);
         actionManager.registerAction(HELP, helpDocAction);
 
