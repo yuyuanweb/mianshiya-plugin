@@ -101,7 +101,13 @@ public class QuestionListManager {
     private @NotNull JPanel getSearchPanel() {
         JBPanel<?> searchPanel = new JBPanel<>(new BorderLayout());
 
-        SearchTextField searchField = new SearchTextField();
+        SearchTextField searchField = new SearchTextField() {
+            // 点击清除按钮后触发
+            @Override
+            protected void onFieldCleared() {
+                QuestionListManager.this.searchAndLoadData(questionQueryRequest);
+            }
+        };
         // 添加 DocumentListener 以监听内容变化
         searchField.addDocumentListener(new DocumentListener() {
             @Override
