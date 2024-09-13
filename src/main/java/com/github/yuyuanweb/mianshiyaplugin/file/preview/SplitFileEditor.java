@@ -3,11 +3,6 @@ package com.github.yuyuanweb.mianshiyaplugin.file.preview;
 import com.github.yuyuanweb.mianshiyaplugin.constant.ViewConstant;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.ide.structureView.StructureViewBuilder;
-import com.intellij.openapi.actionSystem.ActionGroup;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.ActionToolbar;
-import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Key;
@@ -16,7 +11,6 @@ import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.ui.JBSplitter;
-import com.intellij.util.ui.JBEmptyBorder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -108,42 +102,11 @@ public abstract class SplitFileEditor<E1 extends FileEditor, E2 extends FileEdit
         mySplitter.setSecondComponent(mySecondEditor.getComponent());
         mySplitter.setDividerWidth(3);
 
-        myToolbarWrapper = createMarkdownToolbarWrapper(mySplitter);
-
         final JPanel result = new JPanel(new BorderLayout());
-        result.add(myToolbarWrapper, BorderLayout.NORTH);
         result.add(mySplitter, BorderLayout.CENTER);
         adjustEditorsVisibility();
 
         return result;
-    }
-
-    @NotNull
-    private static SplitEditorToolbar createMarkdownToolbarWrapper(@NotNull JComponent targetComponentForActions) {
-        ActionToolbar leftToolbar = createToolbarFromGroupId("Markdown.Toolbar.Left");
-        leftToolbar.setTargetComponent(targetComponentForActions);
-        leftToolbar.setReservePlaceAutoPopupIcon(false);
-
-        ActionToolbar rightToolbar = createToolbarFromGroupId("Markdown.Toolbar.Right");
-        rightToolbar.setTargetComponent(targetComponentForActions);
-        rightToolbar.setReservePlaceAutoPopupIcon(false);
-
-        return new SplitEditorToolbar(leftToolbar, rightToolbar);
-    }
-
-    @NotNull
-    private static ActionToolbar createToolbarFromGroupId(@NotNull String groupId) {
-        final ActionManager actionManager = ActionManager.getInstance();
-
-        if (!actionManager.isGroup(groupId)) {
-            throw new IllegalStateException(groupId + " should have been a group");
-        }
-        final ActionGroup group = ((ActionGroup) actionManager.getAction(groupId));
-        final ActionToolbarImpl editorToolbar =
-                ((ActionToolbarImpl) actionManager.createActionToolbar(ActionPlaces.EDITOR_TOOLBAR, group, true));
-        editorToolbar.setBorder(new JBEmptyBorder(0, 2, 0, 2));
-
-        return editorToolbar;
     }
 
     private void invalidateLayout(boolean requestFocus) {
