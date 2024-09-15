@@ -2,14 +2,10 @@ package com.github.yuyuanweb.mianshiyaplugin.actions;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
-import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
-import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.manager.CookieManager;
 import com.github.yuyuanweb.mianshiyaplugin.model.response.User;
 import com.github.yuyuanweb.mianshiyaplugin.utils.PanelUtil;
 import com.github.yuyuanweb.mianshiyaplugin.view.LoginPanel;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
@@ -19,8 +15,6 @@ import com.intellij.openapi.project.ProjectManager;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-
-import static com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant.LOGOUT_ZH;
 
 /**
  * 登录

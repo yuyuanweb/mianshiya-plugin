@@ -6,7 +6,6 @@ import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.IconConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.BaseResponse;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
@@ -59,11 +58,17 @@ public class LogoutAction extends AnAction implements DumbAware {
                 ActionManager actionManager = ActionManager.getInstance();
                 // 3.1 删除 注销
                 AnAction logoutAction = actionManager.getAction(KeyConstant.LOGOUT);
+                if (logoutAction == null) {
+                    return;
+                }
                 actionGroup.remove(logoutAction);
                 actionManager.unregisterAction(KeyConstant.LOGOUT);
 
                 // 3.2 删除 会员
                 AnAction vipAction = actionManager.getAction(KeyConstant.VIP);
+                if (vipAction == null) {
+                    return;
+                }
                 actionGroup.remove(vipAction);
                 actionManager.unregisterAction(KeyConstant.VIP);
 
