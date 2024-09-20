@@ -19,6 +19,15 @@
 
 ![install.gif](imgs/install.gif)
 
+搜索不到的小伙伴可以通过 JetBrains 插件市场下载，
+> JetBrains 插件市场地址：https://plugins.jetbrains.com/plugin/25258-mianshiya
+
+下载到本地之后按照下图步骤安装即可：
+
+
+![img.png](imgs/img.png)
+
+
 ## 三端兼容
 
 - **JetBrains 系列产品**：支持 IDEA、WebStorm、PyCharm 等 2021.3 及以上版本。
