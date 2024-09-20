@@ -102,19 +102,6 @@ public class OuterBrowserFileEditorPreview extends UserDataHolderBase implements
             LoginPanel loginPanel = new LoginPanel(ProjectManager.getInstance().getDefaultProject());
             loginPanel.showAndGet();
         }
-        loginUser = GlobalState.getInstance().getSavedUser();
-        boolean needTipPanel = !UserUtil.hasVipAuth(loginUser);
-        if (needTipPanel) {
-            JBPanel<?> tipPanel = new JBPanel<>();
-            if (loginUser != null) {
-                JBPanel<?> needVipPanel = PanelUtil.getNeedVipPanel();
-                tipPanel.add(needVipPanel);
-                myComponent.removeAll();
-                myComponent.addToTop(tipPanel);
-                myComponent.repaint();
-                return;
-            }
-        }
 
         File file = null;
         file = FileUtils.openArticle(project, false);
