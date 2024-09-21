@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.yuyuanweb.mianshiyaplugin</id>
     <name>Mianshiya</name>
-    <vendor>co-pine</vendor>
+    <vendor>yuyuanweb</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
