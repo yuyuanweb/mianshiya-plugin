@@ -40,6 +40,14 @@ public interface MianShiYaApi {
     );
 
     /**
+     * 搜索题目列表
+     */
+    @POST("question/search")
+    Call<BaseResponse<Page<Question>>> searchQuestionList(
+            @Body QuestionQueryRequest queryRequest
+    );
+
+    /**
      * 获取题目详情
      */
     @GET("question/get/vo")

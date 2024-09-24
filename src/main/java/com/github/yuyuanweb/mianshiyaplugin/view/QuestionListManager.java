@@ -412,7 +412,7 @@ public class QuestionListManager {
         }
 
         try {
-            return mianShiYaApi.getQuestionList(queryRequest).execute().body();
+            return mianShiYaApi.searchQuestionList(queryRequest).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
