@@ -1,5 +1,6 @@
 package com.github.yuyuanweb.mianshiyaplugin.model.dto;
 
+import com.github.yuyuanweb.mianshiyaplugin.constant.SearchConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +16,7 @@ public class QuestionBankCategoryBankQueryRequest extends QuestionBankQueryReque
     /**
      * 题库分类 id
      */
-    private Long questionBankCategoryId = 1821883295995125761L;
+    private Long questionBankCategoryId = SearchConstant.DEFAULT_QUESTION_BANK_CATEGORY_ID;
 
     private static final long serialVersionUID = 1L;
 }

@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.Date;
 
 /**
- * 注册
+ * 初始化请求工具
  *
  * @author pine
  */

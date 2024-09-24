@@ -2,6 +2,7 @@ package com.github.yuyuanweb.mianshiyaplugin.actions;
 
 import com.github.yuyuanweb.mianshiyaplugin.config.ApiConfig;
 import com.github.yuyuanweb.mianshiyaplugin.constant.PageConstant;
+import com.github.yuyuanweb.mianshiyaplugin.constant.SearchConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.TextConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.Page;
 import com.github.yuyuanweb.mianshiyaplugin.model.common.PageRequest;
@@ -16,6 +17,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.*;
 import com.intellij.ui.table.JBTable;
@@ -29,7 +31,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author pine
@@ -84,7 +85,11 @@ public class QuestionBankAction extends AnAction {
             throw new IllegalArgumentException("queryRequest cannot be null");
         }
         try {
-            return ApiConfig.mianShiYaApi.getQuestionBankList(queryRequest).execute().body().getData();
+            if (SearchConstant.DEFAULT_QUESTION_BANK_CATEGORY_ID.equals(queryRequest.getQuestionBankCategoryId())) {
+                return ApiConfig.mianShiYaApi.listQuestionBankVoByPage(queryRequest).execute().body().getData();
+            } else {
+                return ApiConfig.mianShiYaApi.getQuestionBankList(queryRequest).execute().body().getData();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -95,6 +100,9 @@ public class QuestionBankAction extends AnAction {
      */
     private void loadLabelPanel() {
         labelPanel = new JBPanel<>(new WrapLayout(FlowLayout.LEFT, 5, 5));
+        // 维护当前选中的标签
+        // 通过数组的方式来持有可变的对象引用
+        JBLabel[] selectedLabel = {null};
         ApplicationManager.getApplication().executeOnPooledThread(() -> {
             List<QuestionBankCategory> tagList;
             try {
@@ -102,34 +110,62 @@ public class QuestionBankAction extends AnAction {
             } catch (IOException e) {
                 return;
             }
+            // 自定义淡化颜色
+            // 比 LIGHT_GRAY 更淡的灰色
+            JBColor customLightGray = new JBColor(Gray._220, Gray._80);
+            // 比 GRAY 更淡的灰色
+            JBColor customGray = new JBColor(Gray._180, Gray._40);
+
             ApplicationManager.getApplication().invokeLater(() -> {
                 for (QuestionBankCategory tag : tagList) {
                     JBLabel label = new JBLabel(tag.getName());
                     label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
                     label.setOpaque(true);
-                    label.setBackground(JBColor.LIGHT_GRAY);
+                    // 使用自定义淡灰色
+                    label.setBackground(customLightGray);
                     label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
                     // 点击事件
                     label.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            currentPage[0] = PageConstant.FIRST_PAGE;
-                            queryRequest.setQuestionBankCategoryId(tag.getId());
-                            queryRequest.setCurrent(PageConstant.FIRST_PAGE);
-                            searchAndLoadData(queryRequest);
+                            if (selectedLabel[0] != null && selectedLabel[0] != label) {
+                                // 取消上一个高亮的标签
+                                selectedLabel[0].setBackground(customLightGray);
+                            }
+
+                            if (label == selectedLabel[0]) {
+                                // 如果当前点击的是已经选中的标签，取消高亮
+                                label.setBackground(customLightGray);
+                                // 取消筛选条件
+                                queryRequest.setQuestionBankCategoryId(SearchConstant.DEFAULT_QUESTION_BANK_CATEGORY_ID);
+                                searchAndLoadData(queryRequest);
+                                selectedLabel[0] = null; // 清空选中标签
+                            } else {
+                                // 高亮当前标签
+                                label.setBackground(customGray);
+                                currentPage[0] = PageConstant.FIRST_PAGE;
+                                queryRequest.setQuestionBankCategoryId(tag.getId());
+                                queryRequest.setCurrent(PageConstant.FIRST_PAGE);
+                                searchAndLoadData(queryRequest);
+                                selectedLabel[0] = label; // 更新当前选中标签
+                            }
                         }
 
                         @Override
                         public void mouseEntered(MouseEvent e) {
-                            // 鼠标悬浮效果
-                            label.setBackground(JBColor.GRAY);
+                            if (label != selectedLabel[0]) {
+                                // 鼠标悬浮效果，仅当标签未被选中时生效
+                                label.setBackground(customGray);
+                            }
                         }
 
                         @Override
                         public void mouseExited(MouseEvent e) {
-                            // 恢复原始背景色
-                            label.setBackground(JBColor.LIGHT_GRAY);
+                            if (label != selectedLabel[0]) {
+                                // 鼠标离开时恢复原始背景色，仅当标签未被选中时生效
+                                label.setBackground(customLightGray);
+                            }
                         }
                     });
 
