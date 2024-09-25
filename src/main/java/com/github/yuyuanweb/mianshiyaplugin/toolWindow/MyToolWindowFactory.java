@@ -20,7 +20,6 @@ import com.intellij.ui.content.ContentFactory;
 import com.intellij.util.ui.JBUI;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 

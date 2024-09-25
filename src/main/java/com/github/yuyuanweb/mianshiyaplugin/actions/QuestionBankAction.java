@@ -140,7 +140,8 @@ public class QuestionBankAction extends AnAction {
                                 // 取消筛选条件
                                 queryRequest.setQuestionBankCategoryId(SearchConstant.DEFAULT_QUESTION_BANK_CATEGORY_ID);
                                 searchAndLoadData(queryRequest);
-                                selectedLabel[0] = null; // 清空选中标签
+                                // 清空选中标签
+                                selectedLabel[0] = null;
                             } else {
                                 // 高亮当前标签
                                 label.setBackground(customGray);
@@ -148,7 +149,8 @@ public class QuestionBankAction extends AnAction {
                                 queryRequest.setQuestionBankCategoryId(tag.getId());
                                 queryRequest.setCurrent(PageConstant.FIRST_PAGE);
                                 searchAndLoadData(queryRequest);
-                                selectedLabel[0] = label; // 更新当前选中标签
+                                // 更新当前选中标签
+                                selectedLabel[0] = label;
                             }
                         }
 

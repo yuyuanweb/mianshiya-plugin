@@ -88,7 +88,7 @@ public interface MianShiYaApi {
     );
 
     /**
-     * 获取标签分类列表
+     * 用户退出登录
      */
     @POST("user/logout")
     Call<BaseResponse<Boolean>> userLogout();
