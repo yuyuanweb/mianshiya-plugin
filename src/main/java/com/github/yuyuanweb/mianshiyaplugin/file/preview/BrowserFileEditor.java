@@ -4,6 +4,7 @@ import com.github.yuyuanweb.mianshiyaplugin.config.GlobalState;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.constant.KeyConstant;
 import com.github.yuyuanweb.mianshiyaplugin.model.enums.WebTypeEnum;
+import com.github.yuyuanweb.mianshiyaplugin.utils.ThemeUtil;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
@@ -52,7 +53,8 @@ public class BrowserFileEditor implements FileEditor {
         Long questionId = file.get().get(KeyConstant.QUESTION_ID_KEY);
         WebTypeEnum webTypeEnum = file.get().get(KeyConstant.WEB_TYPE_KEY);
         if (questionId != null && webTypeEnum != null) {
-            String url = String.format(CommonConstant.PLUGIN_QD, questionId, webTypeEnum.getValue());
+            String theme = ThemeUtil.getTheme();
+            String url = String.format(CommonConstant.PLUGIN_QD, questionId, webTypeEnum.getValue(), theme);
             jbCefBrowser.loadURL(url);
         }
     }

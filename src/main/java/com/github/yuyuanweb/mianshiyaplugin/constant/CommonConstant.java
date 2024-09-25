@@ -15,6 +15,6 @@ public interface CommonConstant {
 
     String VIP = WEB_HOST + "vip";
 
-    String PLUGIN_QD = WEB_HOST + "/embed/q/%s/%s";
+    String PLUGIN_QD = WEB_HOST + "embed/q/%s/%s?theme=%s";
 
 }
