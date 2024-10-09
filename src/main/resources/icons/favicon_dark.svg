@@ -3,20 +3,20 @@
   <defs>
     <style>
       .cls-1 {
-        stroke: #bcbcbc;
+        stroke: #2c2e2f;
         stroke-width: .8px;
       }
 
       .cls-1, .cls-2 {
-        fill: #f2f2f2;
-      }
-
-      .cls-2, .cls-3 {
-        stroke-width: 0px;
+        fill: #afb1b3;
       }
 
       .cls-3 {
-        fill: #bcbcbc;
+        fill: #3d3f41;
+      }
+
+      .cls-3, .cls-2 {
+        stroke-width: 0px;
       }
     </style>
   </defs>
