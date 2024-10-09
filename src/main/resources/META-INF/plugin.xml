@@ -51,6 +51,17 @@
         <p>如有问题或建议，欢迎通过 GitHub issue 提交反馈，或者直接联系我们。</p>
     ]]></description>
 
+    <change-notes><![CDATA[
+        <h2>0.5.0</h2>
+        <h3>Added</h3>
+        <p>1、发送网络请求时添加 UA</p>
+        <h3>Changed</h3>
+        <p>1、描述中添加中文，以可以通过中文搜索到插件</p>
+        <p>2、更新插件 logo 为灰色</p>
+        <h3>Fixed</h3>
+        <p>1、修复某些情况下页码不对问题</p>
+    ]]></change-notes>
+
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow canCloseContents="true"
                     icon="/icons/favicon.svg"
@@ -60,11 +71,15 @@
 
         <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.EditorProvider"/>
         <fileType name="msyQUESTION" extensions="msy;" fileNames=".msy" language="msyQUESTION"
-                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.CommonFileType" fieldName="INSTANCE"/>
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.CommonFileType"
+                  fieldName="INSTANCE"/>
         <fileType name="msycQUESTION" extensions="msyc;" fileNames=".msyc" language="msycQUESTION"
-                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.MsycFileType" fieldName="INSTANCE_C"/>
+                  implementationClass="com.github.yuyuanweb.mianshiyaplugin.file.type.MsycFileType"
+                  fieldName="INSTANCE_C"/>
         <fileEditorProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.CommonProvider"/>
-        <editorTabTitleProvider implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.CustomTabTitleProvider" order="last"/>
+        <editorTabTitleProvider
+                implementation="com.github.yuyuanweb.mianshiyaplugin.file.provider.CustomTabTitleProvider"
+                order="last"/>
     </extensions>
 
     <applicationListeners>
