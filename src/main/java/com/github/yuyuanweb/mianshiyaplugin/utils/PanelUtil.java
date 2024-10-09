@@ -135,7 +135,7 @@ public class PanelUtil {
     public static void updatePaginationPanel(JBPanel<?> paginationPanel, long total, int[] currentPage, BiConsumer<Integer, Integer> loadPage) {
         paginationPanel.removeAll();
         // int pageSize = Objects.requireNonNull(GlobalState.getInstance().getState()).pageSize;
-        long totalPage = (total / PAGE_SIZE) + 1;
+        long totalPage = (long) Math.ceil((double) total / PAGE_SIZE);
 
         JBLabel pageLabel = new JBLabel("第 " + currentPage[0] + " / " + totalPage + " 页");
 
