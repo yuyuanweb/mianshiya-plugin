@@ -1,7 +1,9 @@
 package com.github.yuyuanweb.mianshiyaplugin.view;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.yuyuanweb.mianshiyaplugin.constant.CommonConstant;
 import com.github.yuyuanweb.mianshiyaplugin.manager.CookieManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Disposer;
@@ -22,6 +24,8 @@ import java.awt.*;
  * @author pine
  */
 public class LoginPanel extends DialogWrapper {
+
+    private static final Logger logger = Logger.getInstance(LoginPanel.class);
 
     private final BorderLayoutPanel panel = JBUI.Panels.simplePanel();
 
@@ -82,12 +86,21 @@ public class LoginPanel extends DialogWrapper {
         }
 
         private void init() {
+            logger.warn("init----------------------------------------------------------------------------------------------------");
             getJBCefClient().addLoadHandler(cefLoadHandler = new CefLoadHandlerAdapter() {
 
                 @Override
                 public void onLoadingStateChange(CefBrowser browser, boolean isLoading, boolean canGoBack, boolean canGoForward) {
-                    CefCookieManager cefCookieManager = getJBCefCookieManager().getCefCookieManager();
-                    CookieManager.handleCookie(cefCookieManager, LoginPanel.this::doOKAction);
+                    // 建议：只在 isLoading = false (页面加载完毕) 时检查，
+                    // 或者如果你是 SPA (单页应用)，可能需要更频繁的检查。
+                    // 但原来的逻辑每次变化都检查也没大问题，就是性能损耗。
+
+                    String url = browser.getURL();
+                    if (StrUtil.isNotBlank(url) && url.contains("user/login")) { // 简单的防卫，防止在别的页面瞎检查
+                        CefCookieManager cefCookieManager = getJBCefCookieManager().getCefCookieManager();
+                        // 传入 url
+                        CookieManager.handleCookie(cefCookieManager, url, LoginPanel.this::doOKAction);
+                    }
                 }
             }, getCefBrowser());
             loadURL(CommonConstant.WEB_HOST + "user/login");
